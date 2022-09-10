@@ -1,0 +1,62 @@
+body {
+    margin: 40px auto;
+    max-width: 650px;
+    line-height: 1.6;
+    font-size: 18px;
+    color: #444;
+    padding: 0 10px
+}
+
+h1,
+h2,
+h3 {
+    line-height: 1.2
+}
+
+.ginkgo {
+    width: 100%;
+}
+
+.highlight {
+    overflow: auto;
+    background: #eee;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+blockquote {
+    margin: 0;
+    text-align: center;
+
+}
+
+blockquote p {
+    padding: 3px;
+    background: #eee;
+    border-radius: 3px;
+}
+
+blockquote p::before {
+    content: '\201C';
+}
+
+blockquote p::after {
+    content: '\201D';
+}
+
+figcaption {
+    /* background-color: #222; */
+    color: #444;
+    font: smaller sans-serif;
+    padding: 3px;
+    text-align: center;
+}
+
+.cite {
+    font: italic sans-serif;
+}
+
+.head {
+    font-size: 14px;
+    text-align: center;
+}
