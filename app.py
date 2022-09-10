@@ -66,10 +66,12 @@ def markdown_readme_to_html(url: str) -> str:
     return html
 
 
-def render(content):
+def render(content, *, style=""):
     # NOTE Must trust content!
     return render_template(
-        "layout.html", content=Markup(bs(content, features="lxml").prettify())
+        "layout.html",
+        content=Markup(bs(content, features="lxml").prettify()),
+        style=Markup(style),
     )
 
 
@@ -136,11 +138,20 @@ def dashboard() -> str:
             Relevant source code repos: <a href="https://github.com/yrom1/jira-python">Jira</a>, <a
                 href="https://github.com/yrom1/yrom1">LeetCode</a>, <a
                 href="https://github.com/yrom1/strava-rest">Strava</a> (a popular running app), <a
-                href="https://github.com/yrom1/yrom1.github.io">this website</a>, and an <a
+                href="https://github.com/yrom1/yrom1.github.io">this website</a> and an <a
                 href="https://github.com/yrom1/sqlite-etl">ETL repo</a> used when I switched from a flat-file database to a SQLite database.
         </p>\
         """
-        )
+        ),
+        style=dedent(
+            """
+            <style>
+                img {
+                    width: 100%;
+                }
+            </style>
+        """
+        ),
     )
 
 
