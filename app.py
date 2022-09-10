@@ -199,7 +199,7 @@ def fun() -> str:
     <form id="etch-fun-form">
     </form>
 
-    <script src="../etch.js"></script>
+    <script src="/static/etch.js"></script>
     <!-- --- -->
     <p>I made this as part of <a href="https://www.theodinproject.com/">The Odin Project</a> when I was thinking of becoming a front-end developer.</p>
     """,
