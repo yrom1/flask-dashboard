@@ -2,3 +2,4 @@ flask
 markupsafe
 markdown_code_blocks
 beautifulsoup4
+requests
