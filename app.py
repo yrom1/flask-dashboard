@@ -66,12 +66,12 @@ def markdown_readme_to_html(url: str) -> str:
     return html
 
 
-def render(content, *, style=""):
+def render(content, *, head=""):
     # NOTE Must trust content!
     return render_template(
         "layout.html",
         content=Markup(bs(content, features="lxml").prettify()),
-        style=Markup(style),
+        head=Markup(head),
     )
 
 
@@ -81,7 +81,14 @@ def render(content, *, style=""):
 
 @app.route("/")
 def index() -> str:
-    return render("Hello!")
+    return render(
+        "Redirecting to dashboard!",
+        head=dedent(
+            """
+        <meta http-equiv="refresh" content="2; url=/dashboard" />
+        """
+        ),
+    )
 
 
 @app.route("/about")
@@ -143,7 +150,7 @@ def dashboard() -> str:
         </p>\
         """
         ),
-        style=dedent(
+        head=dedent(
             """
             <style>
                 img {
