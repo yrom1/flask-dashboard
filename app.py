@@ -234,7 +234,3 @@ def fun() -> str:
             ]
         )
     )
-
-
-if __name__ == "__app__":
-    app.run(debug=False)
