@@ -66,8 +66,26 @@ def markdown_readme_to_html(url: str) -> str:
     return html
 
 
+def render(content):
+    # NOTE Must trust content!
+    return render_template(
+        "layout.html", content=Markup(bs(content, features="lxml").prettify())
+    )
+
+
+# @app.route("/")
+# TODO ?
+
+
+@app.route("/")
+def index() -> str:
+    return render("Hello!")
+
+
+@app.route("/about")
 def about() -> str:
-    return """
+    return render(
+        """
     <h1>About me</h1>
     <ul>
         <li>2+ years of paid experience coding</li>
@@ -76,11 +94,14 @@ def about() -> str:
     </ul>
     <p>Feel free to email me. A resume can be provided on request.</p>
     """
+    )
 
 
+@app.route("/dashboard")
 def dashboard() -> str:
-    return dedent(
-        f"""\
+    return render(
+        dedent(
+            f"""\
         <h1 id="Dashboard">Personal dashboard</h1>
         <p align="center">This page automatically refreshes every 5 minutes to update the dashboard.</p>
         <table style="width:100%">
@@ -119,33 +140,40 @@ def dashboard() -> str:
                 href="https://github.com/yrom1/sqlite-etl">ETL repo</a> used when I switched from a flat-file database to a SQLite database.
         </p>\
         """
+        )
     )
 
 
+@app.route("/mypandas")
 def mypandas() -> str:
     url = "https://raw.githubusercontent.com/yrom1/mypandas/main/README.md"
-    return markdown_readme_to_html(url)
+    return render(markdown_readme_to_html(url))
 
 
+@app.route("/ty")
 def ty() -> str:
     url = "https://raw.githubusercontent.com/yrom1/ty/main/README.md"
-    return markdown_readme_to_html(url)
+    return render(markdown_readme_to_html(url))
 
 
+@app.route("/exlog")
 def exlog() -> str:
     url = "https://raw.githubusercontent.com/yrom1/exception-logging/main/README.md"
-    return markdown_readme_to_html(url)
+    return render(markdown_readme_to_html(url))
 
 
+@app.route("/postgrespy")
 def postgrespy() -> str:
     url = "https://raw.githubusercontent.com/yrom1/postgrespy/main/README.md"
-    return markdown_readme_to_html(url)
+    return render(markdown_readme_to_html(url))
 
 
+@app.route("/fun")
 def fun() -> str:
-    return "<hr>".join(
-        [
-            """
+    return render(
+        "<hr>".join(
+            [
+                """
     <h1>Etch a sketch</h1>
     <!-- ETCH-A-SKETCH  -->
     <p>Move your mouse around in the box!</p>
@@ -164,11 +192,12 @@ def fun() -> str:
     <!-- --- -->
     <p>I made this as part of <a href="https://www.theodinproject.com/">The Odin Project</a> when I was thinking of becoming a front-end developer.</p>
     """,
-            """<h1>Python3 Metaprogramming</h1>
+                """<h1>Python3 Metaprogramming</h1>
     <iframe width="560" height="315" src="https://www.youtube.com/embed/sPiWg5jSoZI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     <p>This is a wonderful talk by <a href="https://en.wikipedia.org/wiki/David_M._Beazley">David Beazley</a>, and despite being a very old talk is still up to date because it was about an early version of Python3 at the time. One of the exercises left to the reader in this tutorial is to make a class decorator that works with <code>@staticmethod</code>s, and <code>@classmethod</code>s, something that you actually don't see a lot. And that challenge was what inspired me to make my exception logging package on PyPI (<a href="https://pypi.org/project/exlog/">exlog</a>). And I'm glad I did, because otherwise I wouldn't of understood why class decorators and metaclasses work together so seamlessly.</p>
     """,
-            """
+                """
+    <h1>CMU 15-445/645</h1>
     <p>A <a href="https://15445.courses.cs.cmu.edu/fall2019/">great database course</a> is given by <a href="https://twitter.com/andy_pavlo">Andy Pavlo</a>, who is objectively hilarious. His course begins by him presenting from his bathtub during COVID:</p>
     <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLSE8ODhjZXjbohkNBWQs_otTrBTrjyohi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     <p>I would give two downsides about auditing this course, which I should note I thought was otherwise very excellent:</p>
@@ -180,36 +209,14 @@ def fun() -> str:
     <img src="https://blog.uber-cdn.com/cdn-cgi/image/width=768,quality=80,onerror=redirect,format=auto/wp-content/uploads/2016/07/MySQL_Index_Property_Header.png">
     ... I felt did a solid job explaining some specific details about how MySQL and Postgres are implemented, particularily as it relates to indexes.
     """,
-            """
+                """
     <h1>Dealing with Trolls</h1>
     <iframe width="560" height="315" src="https://www.youtube.com/embed/EBRMq2Ioxsc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     <p>I really like this keynote by <a href="https://en.wikipedia.org/wiki/Guido_van_Rossum">Guido van Rossum</a>, it contextualizes a lot of the criticisms one hears about Python. Which for some reason online, are fairly common and widespread.</p>""",
-        ]
+            ]
+        )
     )
 
 
-@app.route("/")
-@app.route("/<page>")
-def hello(page=None):
-    # NOTE Must trust content!
-    match page:
-        case "about":
-            content = about()
-        case "dashboard":
-            content = dashboard()
-        case "ty":
-            content = ty()
-        case "exlog":
-            content = exlog()
-        case "postgrespy":
-            content = postgrespy()
-        case "mypandas":
-            content = mypandas()
-        case "fun":
-            content = fun()
-        case _:
-            content = "<h1>404</h1>"
-
-    return render_template(
-        "layout.html", content=Markup(bs(content, features="lxml").prettify())
-    )
+if __name__ == "__app__":
+    app.run(debug=True)
