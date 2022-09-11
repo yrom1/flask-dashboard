@@ -106,14 +106,39 @@ def about() -> str:
     )
 
 
+def kpi(url: str) -> int:
+    return int(requests.get(url).text)
+
+
 @app.route("/dashboard")
 def dashboard() -> str:
     return render(
         dedent(
             f"""\
-        <h1 id="Dashboard">Personal dashboard</h1>
         <p align="center">This page automatically refreshes every 5 minutes to update the dashboard.</p>
+        <h1 id="Dashboard">Personal dashboard</h1>
         <table style="width:100%">
+            <tr>
+                <td style="text-align:left"><b><i>This month —</i></b></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="metrics">
+                <td>Issues Completed</td>
+                <td>LeetCode Questions</td>
+                <td>Kilometers Ran</td>
+            </tr>
+            <tr class="numbers">
+                <td><strong>{kpi("https://raw.githubusercontent.com/yrom1/jira-python/main/ISSUES_DONE_THIS_MONTH")}</strong></td>
+                <td><strong>{kpi("https://raw.githubusercontent.com/yrom1/yrom1/main/LEETCODE_QUESTIONS_THIS_MONTH")}</strong></td>
+                <td><strong>{kpi("https://raw.githubusercontent.com/yrom1/strava-rest/main/KMS_RAN_THIS_MONTH")}</strong></td>
+            </tr>
+        </table>
+        <table style="width:100%">
+            <tr>
+                <th style="text-align:left"><i>Overview —</i></th>
+                <th></th>
+            </tr>
             <tr>
                 <th></th>
                 <th><a href="https://en.wikipedia.org/wiki/Andon_(manufacturing)">Andon</a></th>
