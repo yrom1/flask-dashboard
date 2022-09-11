@@ -133,14 +133,14 @@ def dashboard() -> str:
         </table>
         <blockquote><p>With computers available, it is a waste to perform calculations by hand.</p></blockquote><figcaption>—Taiichi Ohno, <cite class="cite">Toyota Production System Beyond Large-Scale Production</cite></figcaption>
         <h2>Dashboard explanation</h2>
-        <p>This dashboard tracks some useful KPI metrics about myself, specifically:</p>
+        <p>This dashboard tracks some useful KPIs about myself, specifically:</p>
         <ul>
             <li>The first graph is about Jira, issue tracking software. I find it helpful to see how much effort I've been exerting recently, measured by the number of Jira issues completed, i.e. put in the 'Done' column of a Jira kanban board.</li>
             <li>The middle graph pertains to LeetCode, a programming practice problem site. Knowing how many questions I've done the past week is helpful to see if I'm hitting my desired pace. It helps me choose if I should practice Python or SQL on a given day. And seeing my progress over a long period of time is good motivation.</li>
             <li>The last graph pertains to Strava, a GPS run tracking app. I find this graph particularly useful to know how many days it's been since I ran last, which is an easy thing to forget. Also, it's helpful to see the distance I ran, to see if I'm making any progress.</li>
         </ul>
         <h2>Source code</h2>
-        The general idea for this dashboard is about using Github Actions to run Python scripts to update the graph image files and KPI metrics such as 'DAYS_SINCE_LAST_RUN', which I store in public Github repositories. If needed data is scraped and stored in a SQLite database, this is only needed for the LeetCode metrics as Jira and Strava store the data for me. Based on the KPI metrics the andon green-yellow-red colors are updated every time the page is refreshed by Flask. The KPI metrics themselves are stored as plain text in the relevant Github repositories.
+        The general idea for this dashboard is about using Github Actions to run Python scripts to update the graph image files and KPIs such as 'DAYS_SINCE_LAST_RUN', which I store in public Github repositories. If needed data is scraped and stored in a SQLite database, this is only needed for the LeetCode metrics as Jira and Strava store the data for me. Based on the KPIs the andon green-yellow-red colors are updated every time the page is refreshed by Flask. The KPIs themselves are stored as plain text in the relevant Github repositories.
         <p>
             Relevant source code repos: <a href="https://github.com/yrom1/jira-python">Jira</a>, <a href="https://github.com/yrom1/yrom1">LeetCode</a>, <a href="https://github.com/yrom1/strava-rest">Strava</a> (a popular running app), <a href="https://github.com/yrom1/flask">this Flask website</a> and an <a href="https://github.com/yrom1/sqlite-etl">ETL repo</a> used when I switched from a flat-file database to a SQLite database.
         </p>\
