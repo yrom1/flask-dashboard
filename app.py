@@ -66,11 +66,12 @@ def markdown_readme_to_html(url: str) -> str:
     return html
 
 
-def render(content, *, head=""):
+def render(content, *, title="Ryan Moore", head=""):
     # NOTE Must trust content!
     return render_template(
         "layout.html",
         content=Markup(content),
+        title=Markup(title),
         head=Markup(head),
     )
 
@@ -102,7 +103,8 @@ def about() -> str:
         <li>Engineering master's degree</li>
     </ul>
     <p>Feel free to email me. A resume can be provided on request.</p>
-    """
+    """,
+        title="Ryan | about me",
     )
 
 
@@ -177,31 +179,35 @@ def dashboard() -> str:
             </style>
         """
         ),
+        title="Ryan | dashboard",
     )
 
 
 @app.route("/mypandas")
 def mypandas() -> str:
     url = "https://raw.githubusercontent.com/yrom1/mypandas/main/README.md"
-    return render(markdown_readme_to_html(url))
+    return render(
+        markdown_readme_to_html(url),
+        title="Ryan | mypandas",
+    )
 
 
 @app.route("/ty")
 def ty() -> str:
     url = "https://raw.githubusercontent.com/yrom1/ty/main/README.md"
-    return render(markdown_readme_to_html(url))
+    return render(markdown_readme_to_html(url), title="Ryan | ty")
 
 
 @app.route("/exlog")
 def exlog() -> str:
     url = "https://raw.githubusercontent.com/yrom1/exception-logging/main/README.md"
-    return render(markdown_readme_to_html(url))
+    return render(markdown_readme_to_html(url), title="Ryan | exlog")
 
 
 @app.route("/postgrespy")
 def postgrespy() -> str:
     url = "https://raw.githubusercontent.com/yrom1/postgrespy/main/README.md"
-    return render(markdown_readme_to_html(url))
+    return render(markdown_readme_to_html(url), title="Ryan | postgrespy")
 
 
 @app.route("/fun")
@@ -250,5 +256,6 @@ def fun() -> str:
     <iframe width="560" height="315" src="https://www.youtube.com/embed/EBRMq2Ioxsc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     <p>I really like this keynote by <a href="https://en.wikipedia.org/wiki/Guido_van_Rossum">Guido van Rossum</a>, it contextualizes a lot of the criticisms one hears about Python. Which for some reason online, are fairly common and widespread.</p>""",
             ]
-        )
+        ),
+        title="Ryan | fun",
     )
