@@ -6,6 +6,9 @@ from bs4 import BeautifulSoup as bs
 from markdown_code_blocks import highlight
 from markupsafe import Markup, escape
 
+from datetime import datetime
+from zoneinfo import ZoneInfo
+
 from flask import Flask, render_template, url_for
 
 app = Flask(__name__)
@@ -112,6 +115,25 @@ def kpi(url: str) -> int:
     return int(requests.get(url).text)
 
 
+DAY_OF_MONTH = datetime.now(ZoneInfo("US/Eastern")).date().day
+ISSUES_DONE_THIS_MONTH = kpi(
+    "https://raw.githubusercontent.com/yrom1/jira-python/main/ISSUES_DONE_THIS_MONTH"
+)
+LEETCODE_QUESTIONS_THIS_MONTH = kpi(
+    "https://raw.githubusercontent.com/yrom1/yrom1/main/LEETCODE_QUESTIONS_THIS_MONTH"
+)
+KMS_RAN_THIS_MONTH = kpi(
+    "https://raw.githubusercontent.com/yrom1/strava-rest/main/KMS_RAN_THIS_MONTH"
+)
+
+
+def per_day(metric):
+    return round(metric / DAY_OF_MONTH)
+
+
+space = " " * 2
+
+
 @app.route("/dashboard")
 def dashboard() -> str:
     return render(
@@ -129,9 +151,9 @@ def dashboard() -> str:
                 <td>Kilometers Ran</td>
             </tr>
             <tr class="numbers">
-                <td><strong>{kpi("https://raw.githubusercontent.com/yrom1/jira-python/main/ISSUES_DONE_THIS_MONTH")}</strong></td>
-                <td><strong>{kpi("https://raw.githubusercontent.com/yrom1/yrom1/main/LEETCODE_QUESTIONS_THIS_MONTH")}</strong></td>
-                <td><strong>{kpi("https://raw.githubusercontent.com/yrom1/strava-rest/main/KMS_RAN_THIS_MONTH")}</strong></td>
+                <td><strong>{ISSUES_DONE_THIS_MONTH}</strong><span class="day">{space}({per_day(ISSUES_DONE_THIS_MONTH)}/day)</span></td>
+                <td><strong>{LEETCODE_QUESTIONS_THIS_MONTH}</strong><span class="day">{space}({per_day(LEETCODE_QUESTIONS_THIS_MONTH)}/day)</span></td>
+                <td><strong>{KMS_RAN_THIS_MONTH}</strong><span class="day">{space}({per_day(KMS_RAN_THIS_MONTH)}/day)</span></td>
             </tr>
         </table>
         <table style="width:100%">
