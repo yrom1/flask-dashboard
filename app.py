@@ -136,10 +136,7 @@ def dashboard() -> str:
         </table>
         <table style="width:100%">
             <tr>
-                <th style="text-align:left" colspan="2"><i>Overview —</i></th>
-            </tr>
-            <tr>
-                <th></th>
+                <th style="text-align:left"><i>Overview —</i></th>
                 <th><a href="https://en.wikipedia.org/wiki/Andon_(manufacturing)">Andon</a></th>
             </tr>
             <tr align="center">
