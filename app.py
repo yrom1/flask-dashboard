@@ -119,9 +119,7 @@ def dashboard() -> str:
         <h1 id="Dashboard">Personal dashboard</h1>
         <table style="width:100%">
             <tr>
-                <td style="text-align:left"><b><i>This month —</i></b></td>
-                <td></td>
-                <td></td>
+                <th style="text-align:left" colspan="3"><b><i>This month —</i></b></th>
             </tr>
             <tr class="metrics">
                 <td>Issues Completed</td>
@@ -136,8 +134,7 @@ def dashboard() -> str:
         </table>
         <table style="width:100%">
             <tr>
-                <th style="text-align:left"><i>Overview —</i></th>
-                <th></th>
+                <th style="text-align:left" colspan="2"><i>Overview —</i></th>
             </tr>
             <tr>
                 <th></th>
