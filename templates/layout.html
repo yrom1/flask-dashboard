@@ -70,11 +70,12 @@
     <script>
 
         var svg = d3.select("div#jira")
-            .append("p")     // create and append a <p> tag
-            .text("Eureka!") // set text content
-        // .append("svg")
+            .append("svg")
+            .attr("style", "outline: solid black;")
+            .style("background", "red")
+            .attr("viewBox", "0 0 300 100");
         // .attr("preserveAspectRatio", "xMinYMin meet")
-        // .attr("viewBox", "0 0 300 300")
+
         // .classed("svg-content", true);
 
         d3.csv("/static/jira.csv", function (error, data) {
