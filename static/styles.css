@@ -72,3 +72,7 @@ figcaption {
 .day {
     font-size: 75%;
 }
+
+.bar {
+    fill: blue;
+}
