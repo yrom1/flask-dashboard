@@ -158,18 +158,19 @@ def dashboard() -> str:
         </table>
         <table style="width:100%">
             <tr>
-                <th style="text-align:left" colspan="2"><i>Overview —</i></th>
+                <th style="text-align:left"><i>Overview —</i></th>
+                <th width="10%">Status</th>
             </tr>
             <tr align="center">
-                <td><img src="https://raw.githubusercontent.com/yrom1/jira-python/main/Jira_hustle_graph.png"/></td>
-                <td style="background-color:{jira_color()};">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td><div id="jira"></div></td>
+                <td style="background-color:{jira_color()}"></td>
             </tr>
             <tr align="center">
-                <td><img src="https://raw.githubusercontent.com/yrom1/yrom1/main/LeetCode_graph.png"/></td>
+                <td><div id="leetcode"></div></td>
                 <td style="background-color:{leetcode_color()};"></td>
             </tr>
             <tr align="center">
-                <td><img src="https://raw.githubusercontent.com/yrom1/strava-rest/main/Strava_run_graph.png"/></td>
+                <td><div id="strava"></div></td>
                 <td style="background-color:{strava_color()};"></td>
             </tr>
         </table>
@@ -183,10 +184,15 @@ def dashboard() -> str:
         </ul>
         <p>The <a href="https://en.wikipedia.org/wiki/Andon_(manufacturing)">andon</a> colors let me know if my desired pace is being achieved (in the S.M.A.R.<strong>T.</strong> sense).
         <h2>Source code</h2>
-        The general idea for this dashboard is about using Github Actions to run Python scripts to update the graph image files and KPIs such as 'DAYS_SINCE_LAST_RUN', which I store in public Github repositories. If needed data is scraped and stored in a SQLite database, this is only needed for the LeetCode metrics as Jira and Strava store the data for me. Based on the KPIs the andon green-yellow-red colors are updated every time the page is refreshed by Flask. The KPIs themselves are stored as plain text in the relevant Github repositories.
+        <p>The general idea for this dashboard is about using Github Actions to run Python scripts to update the graph image files and KPIs such as 'DAYS_SINCE_LAST_RUN', which I store in public Github repositories. If needed data is scraped and stored in a SQLite database, this is only needed for the LeetCode metrics as Jira and Strava store the data for me. Based on the KPIs the andon green-yellow-red colors are updated every time the page is refreshed by Flask. The KPIs themselves are stored as plain text in the relevant Github repositories.</p>
+
         <p>
             Relevant source code repos: <a href="https://github.com/yrom1/jira-python">Jira</a>, <a href="https://github.com/yrom1/yrom1">LeetCode</a>, <a href="https://github.com/yrom1/strava-rest">Strava</a>, <a href="https://github.com/yrom1/flask">this Flask website</a>, the <a href="https://github.com/yrom1/opengraph-preview">Open Graph dynamic preview image</a> and an <a href="https://github.com/yrom1/sqlite-etl">ETL repo</a> used when I switched from a flat-file database to a SQLite database.
-        </p>\
+        </p>
+
+        <p>
+        <b>UPDATE</b> (14 Sep 2022): I switched from Matplotlib to Plotly.js. The main motivation was to make the graphs responsive to screen size changes. Another problem I was having using Matplotlib image files stored in different repositories, was that it combined data and styling. Now each repo provides *only* single file for plotting, 'plot.json', and all the stying code is contained in this repo in JavaScript.
+        <p>
         """
         ),
         head=dedent(
