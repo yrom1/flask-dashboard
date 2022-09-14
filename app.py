@@ -191,7 +191,7 @@ def dashboard() -> str:
         </p>
 
         <p>
-        <b>UPDATE</b> (14 Sep 2022): I switched from Matplotlib to Plotly.js. The main motivation was to make the graphs responsive to screen size changes. Another problem I was having using Matplotlib image files stored in different repositories, was that it combined data and styling. Now each repo provides *only* single file for plotting, 'plot.json', and all the stying code is contained in this repo in JavaScript.
+        <b>UPDATE</b> (14 Sep 2022): I switched from Matplotlib to Plotly.js. The main motivation was to make the graphs responsive to screen size changes. Another problem I was having using Matplotlib image files stored in different repositories, was that it combined data and styling. Now each repository provides <i>only</i> a single data file for plotting, 'plot.json', and all the stying code is contained in this repository in JavaScript.
         <p>
         """
         ),
