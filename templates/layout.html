@@ -58,6 +58,8 @@
     <script>
         let HEIGHT = 300;
         // TODO DRY
+
+        // jira plot
         (async function () {
             var trace1 = {
                 type: 'bar',
@@ -78,9 +80,9 @@
             let jira_json = await jira_r;
             trace1.x = Object.values(jira_json.date);
             trace1.y = Object.values(jira_json.value);
-            console.log(Object.values(jira_json.date));
+
             const days_since_last_run = trace1.y.slice().reverse().findIndex((x) => x > 0);
-            console.log(trace1);
+
             var layout = {
                 title: days_since_last_run.toString() + " Days Since Last Run",
                 font: { size: 14 },
@@ -96,6 +98,66 @@
 
         })();
 
+        // leetcode plot
+        (async function () {
+            const url = "https://raw.githubusercontent.com/yrom1/yrom1/main/plot.json"
+            const jira_r = fetch(url)
+                .then((response) => response.json())
+                .then((x) => {
+                    return x;
+                });
+            let jira_json = await jira_r;
+
+            var trace1 = {
+                type: 'scatter',
+                name: 'Python',
+                marker: {
+                    color: 'blue',
+                    line: {
+                        width: 2.5
+                    }
+                }
+            };
+            trace1.x = Object.values(jira_json.py_dates);
+            trace1.y = Object.values(jira_json.py_ranks);
+
+            var trace2 = {
+                type: 'scatter',
+                name: 'SQL',
+                marker: {
+                    color: 'orange',
+                    line: {
+                        width: 2.5
+                    }
+                }
+            };
+            trace2.x = Object.values(jira_json.sql_dates);
+            trace2.y = Object.values(jira_json.sql_ranks);
+
+            let py_rank = trace1.y.slice();
+            let sql_rank = trace2.y.slice();
+
+            let py_start = py_rank.slice(-7)[0]
+            let sql_start = sql_rank.slice(-7)[0]
+
+            let num_questions = (py_rank.slice(-1)[0] - py_start) + (sql_rank.slice(-1)[0] - sql_start)
+
+            var layout = {
+                title: num_questions.toString() + " LeetCode Questions this Week",
+                font: { size: 14 },
+                // xaxis: { title: { text: "Date" } },
+                yaxis: { title: { text: "# Completed Questions" } },
+                height: HEIGHT,
+            };
+
+            var config = { responsive: true }
+            var data = [trace1, trace2];
+            Plotly.newPlot('leetcode', data, layout, config);
+            window.dispatchEvent(new Event('resize'));
+
+        })();
+
+        // strava plot
         (async function () {
             var trace1 = {
                 type: 'bar',
@@ -116,8 +178,7 @@
             let jira_json = await jira_r;
             trace1.x = Object.values(jira_json.date);
             trace1.y = Object.values(jira_json.value);
-            console.log(Object.values(jira_json.date));
-            console.log(trace1);
+
             var layout = {
                 title: (trace1.y[trace1.y.length - 1]).toString() + " Jira Issues Completed Today",
                 font: { size: 14 },

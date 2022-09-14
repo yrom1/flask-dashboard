@@ -166,7 +166,7 @@ def dashboard() -> str:
                 <td style="background-color:{jira_color()}"></td>
             </tr>
             <tr align="center">
-                <td><img src="https://raw.githubusercontent.com/yrom1/yrom1/main/LeetCode_graph.png"/></td>
+                <td><div id="leetcode"></div></td>
                 <td style="background-color:{leetcode_color()};"></td>
             </tr>
             <tr align="center">
