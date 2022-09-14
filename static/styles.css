@@ -1,9 +1,14 @@
+:root {
+    --main-light-color: #eee;
+    --main-dark-color: #444;
+}
+
 body {
     margin: 40px auto;
     max-width: 650px;
     line-height: 1.6;
     font-size: 18px;
-    color: #444;
+    color: var(--main-dark-color);
     padding: 0 10px
 }
 
@@ -19,7 +24,7 @@ h3 {
 
 .highlight {
     overflow: auto;
-    background: #eee;
+    background: var(--main-light-color);
     padding: 3px;
     border-radius: 3px;
 }
@@ -32,7 +37,7 @@ blockquote {
 
 blockquote p {
     padding: 3px;
-    background: #eee;
+    background: var(--main-light-color);
     border-radius: 3px;
 }
 
@@ -46,7 +51,7 @@ blockquote p::after {
 
 figcaption {
     /* background-color: #222; */
-    color: #444;
+    color: var(--main-dark-color);
     font: smaller sans-serif;
     padding: 3px;
     text-align: center;
