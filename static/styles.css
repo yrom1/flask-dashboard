@@ -1,7 +1,10 @@
 :root {
-    --main-light-color: #fff;
-    /* --main-grey-color: #eee; */
-    --main-dark-color: #111;
+    /* https://tinyclouds.org/ */
+    --main-light-color: #ffffff;
+    --main-dark-color: #111111;
+    --main-link-color: #58a6ff;
+    /* --main-light-link-color: #58a6ff;
+    --main-dark-link-color: #0969da; */
 }
 
 body {
@@ -79,4 +82,10 @@ figcaption {
 
 .day {
     font-size: 75%;
+}
+
+a,
+a:visited {
+    color:
+        var(--main-link-color);
 }

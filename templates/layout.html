@@ -85,11 +85,14 @@
         // let DARK_COLOR = window.getComputedStyle(THEME_BUTTON)['background-color'];
         let LIGHT_COLOR = "#fff";
         let DARK_COLOR = "#111";
+        let LIGHT_LINK_COLOR = "#58a6ff";
+        let DARK_LINK_COLOR = "#0969da";
 
         function setLightTheme() {
             var bodyStyles = document.body.style;
             bodyStyles.setProperty('--main-light-color', LIGHT_COLOR);
             bodyStyles.setProperty('--main-dark-color', DARK_COLOR);
+            bodyStyles.setProperty('--main-link-color', LIGHT_LINK_COLOR);
             let theme_button = document.getElementById("theme-button");
             theme_button.innerHTML = 'light';
         }
@@ -97,6 +100,7 @@
             var bodyStyles = document.body.style;
             bodyStyles.setProperty('--main-light-color', DARK_COLOR);
             bodyStyles.setProperty('--main-dark-color', LIGHT_COLOR);
+            bodyStyles.setProperty('--main-link-color', DARK_LINK_COLOR);
             let theme_button = document.getElementById("theme-button");
             theme_button.innerHTML = 'dark';
         }
