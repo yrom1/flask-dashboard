@@ -158,8 +158,8 @@ def dashboard() -> str:
         </table>
         <table style="width:100%">
             <tr>
-                <th style="text-align:left" colspan="1"><i>Overview —</i></th>
-                <th>Status</th>
+                <th style="text-align:left"><i>Overview —</i></th>
+                <th width="10%">Status</th>
             </tr>
             <tr align="center">
                 <td><div id="jira"></div></td>
