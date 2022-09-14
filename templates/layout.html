@@ -80,9 +80,10 @@
             console.log(trace1);
             var layout = {
                 title: (trace1.y[trace1.y.length - 1]).toString() + " Jira Issues Completed Today",
-                font: { size: 18 },
+                font: { size: 14 },
                 xaxis: { title: { text: "Date" } },
                 yaxis: { title: { text: "# Completed Issues" } },
+                height: 300,
             };
 
             var config = { responsive: true }
