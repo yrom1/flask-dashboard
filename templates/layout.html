@@ -31,9 +31,9 @@
 </head>
 
 <body>
-    <div>
+    <!-- <div>
         <button id="theme-button">light</button>
-    </div>
+    </div> -->
     <header class="head">
         <img alt="credit: Jean-Pol GRANDMONT" class="ginkgo" src="/static/trees.jpg" />
         <h1>Ryan Moore</h1>
@@ -58,29 +58,11 @@
     {{ content }}
 
     <script>
-        // window.onload = function () {
-        //     const toggle = document.getElementById("topnav_right_mode_toggle");
-        //     const theme = document.getElementById("stylesheet_toggle");
-        //     const selected = localStorage.getItem("css");
-        //     if (selected !== null) {
-        //         theme.href = selected;
-        //     }
-
-        //     toggle.addEventListener("click", function () {
-        //         if (theme.getAttribute("href") == "/static/css/base-theme.css") {
-        //             theme.href = "/static/css/dark-theme.css";
-        //         } else {
-        //             theme.href = "/static/css/base-theme.css";
-        //         }
-        //         localStorage.setItem("css", theme.href);
-        //     });
-        // }
-
         let HEIGHT = 300;
 
         var bodyStyles = document.body.style;
         // so changes in .css file propogate
-        let THEME_BUTTON = document.getElementById("theme-button");
+        // let THEME_BUTTON = document.getElementById("theme-button");
         // let LIGHT_COLOR = window.getComputedStyle(THEME_BUTTON)['color'];
         // let DARK_COLOR = window.getComputedStyle(THEME_BUTTON)['background-color'];
         let LIGHT_COLOR = "#fff";
@@ -88,44 +70,55 @@
         let LIGHT_LINK_COLOR = "#0969da";
         let DARK_LINK_COLOR = "#58a6ff";
 
-        let [BACKGROUND, TEXT, LINK] = ["", "", ""];
-
         function setLightTheme() {
             var bodyStyles = document.body.style;
             bodyStyles.setProperty('--main-background-color', LIGHT_COLOR);
             bodyStyles.setProperty('--main-text-color', DARK_COLOR);
             bodyStyles.setProperty('--main-link-color', LIGHT_LINK_COLOR);
-            [BACKGROUND, TEXT, LINK] = [LIGHT_COLOR, DARK_COLOR, LIGHT_LINK_COLOR];
-            let theme_button = document.getElementById("theme-button");
-            theme_button.innerHTML = 'light';
+            // let theme_button = document.getElementById("theme-button");
+            // theme_button.innerHTML = 'light';
         }
         function setDarkTheme() {
             var bodyStyles = document.body.style;
             bodyStyles.setProperty('--main-background-color', DARK_COLOR);
             bodyStyles.setProperty('--main-text-color', LIGHT_COLOR);
             bodyStyles.setProperty('--main-link-color', DARK_LINK_COLOR);
-            [BACKGROUND, TEXT, LINK] = [DARK_COLOR, LIGHT_COLOR, DARK_LINK_COLOR];
-            let theme_button = document.getElementById("theme-button");
-            theme_button.innerHTML = 'dark';
+            // let theme_button = document.getElementById("theme-button");
+            // theme_button.innerHTML = 'dark';
         }
 
-        let theme_button = document.getElementById("theme-button");
-        theme_button.addEventListener("click", flipTheme);
 
-        function flipTheme() {
-            let theme = document.getElementById("theme-button").innerHTML;
-            if (theme == 'light') {
-                setDarkTheme()
-                console.log(document.getElementById('theme-button').innerHTML)
-            } else {
-                setLightTheme()
-                console.log(document.getElementById('theme-button').innerHTML)
-            }
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            setDarkTheme();
+        } else {
+            setLightTheme();
         }
+        // let theme_button = document.getElementById("theme-button");
+        // theme_button.addEventListener("click", flipTheme);
+        // function flipTheme() {
+        //     let theme = document.getElementById("theme-button").innerHTML;
+        //     if (theme == 'light') {
+        //         setDarkTheme()
+        //         console.log(document.getElementById('theme-button').innerHTML)
+        //     } else {
+        //         setLightTheme()
+        //         console.log(document.getElementById('theme-button').innerHTML)
+        //     }
+        // }
         // TODO DRY
 
         // jira plot
         (async function () {
+            let [BACKGROUND, TEXT, LINK] = ["", "", ""];
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                // dark theme
+                [BACKGROUND, TEXT, LINK] = [DARK_COLOR, LIGHT_COLOR, LIGHT_LINK_COLOR];
+            } else {
+                // light theme
+                [BACKGROUND, TEXT, LINK] = [LIGHT_COLOR, DARK_COLOR, DARK_LINK_COLOR];
+            }
+
+
             var trace1 = {
                 type: 'bar',
                 marker: {
@@ -150,7 +143,7 @@
 
             var layout = {
                 title: days_since_last_run.toString() + " Days Since Last Run",
-                font: { size: 14 },
+                font: { size: 14, color: TEXT },
                 // xaxis: { title: { text: "Date" } },
                 yaxis: { title: { text: "Distance Ran (km)" }, gridcolor: "rgba(0,0,0,0)" },
                 xaxis: { gridcolor: "rgba(0,0,0,0)" },
@@ -167,106 +160,106 @@
 
         })();
 
-        // leetcode plot
-        (async function () {
-            const url = "https://raw.githubusercontent.com/yrom1/yrom1/main/plot.json"
-            const jira_r = fetch(url)
-                .then((response) => response.json())
-                .then((x) => {
-                    return x;
-                });
-            let jira_json = await jira_r;
+        // // leetcode plot
+        // (async function () {
+        //     const url = "https://raw.githubusercontent.com/yrom1/yrom1/main/plot.json"
+        //     const jira_r = fetch(url)
+        //         .then((response) => response.json())
+        //         .then((x) => {
+        //             return x;
+        //         });
+        //     let jira_json = await jira_r;
 
-            var trace1 = {
-                type: 'scatter',
-                name: 'Python',
-                marker: {
-                    color: 'blue',
-                    line: {
-                        width: 2.5
-                    }
-                }
-            };
-            trace1.x = Object.values(jira_json.py_dates);
-            trace1.y = Object.values(jira_json.py_ranks);
+        //     var trace1 = {
+        //         type: 'scatter',
+        //         name: 'Python',
+        //         marker: {
+        //             color: 'blue',
+        //             line: {
+        //                 width: 2.5
+        //             }
+        //         }
+        //     };
+        //     trace1.x = Object.values(jira_json.py_dates);
+        //     trace1.y = Object.values(jira_json.py_ranks);
 
-            var trace2 = {
-                type: 'scatter',
-                name: 'SQL',
-                marker: {
-                    color: 'orange',
-                    line: {
-                        width: 2.5
-                    }
-                }
-            };
-            trace2.x = Object.values(jira_json.sql_dates);
-            trace2.y = Object.values(jira_json.sql_ranks);
+        //     var trace2 = {
+        //         type: 'scatter',
+        //         name: 'SQL',
+        //         marker: {
+        //             color: 'orange',
+        //             line: {
+        //                 width: 2.5
+        //             }
+        //         }
+        //     };
+        //     trace2.x = Object.values(jira_json.sql_dates);
+        //     trace2.y = Object.values(jira_json.sql_ranks);
 
-            let py_rank = trace1.y.slice();
-            let sql_rank = trace2.y.slice();
+        //     let py_rank = trace1.y.slice();
+        //     let sql_rank = trace2.y.slice();
 
-            let py_start = py_rank.slice(-7)[0]
-            let sql_start = sql_rank.slice(-7)[0]
+        //     let py_start = py_rank.slice(-7)[0]
+        //     let sql_start = sql_rank.slice(-7)[0]
 
-            let num_questions = (py_rank.slice(-1)[0] - py_start) + (sql_rank.slice(-1)[0] - sql_start)
+        //     let num_questions = (py_rank.slice(-1)[0] - py_start) + (sql_rank.slice(-1)[0] - sql_start)
 
-            var layout = {
-                title: num_questions.toString() + " LeetCode Questions this Week",
-                font: { size: 14 },
-                // xaxis: { title: { text: "Date" } },
-                height: HEIGHT,
-                yaxis: { title: { text: "# Completed Questions" }, gridcolor: "rgba(0,0,0,0)" },
-                xaxis: { gridcolor: "rgba(0,0,0,0)" },
-                paper_bgcolor: "rgba(0,0,0,0)",
-                plot_bgcolor: "rgba(0,0,0,0)",
-            };
+        //     var layout = {
+        //         title: num_questions.toString() + " LeetCode Questions this Week",
+        //         font: { size: 14, color: TEXT },
+        //         // xaxis: { title: { text: "Date" } },
+        //         height: HEIGHT,
+        //         yaxis: { title: { text: "# Completed Questions" }, gridcolor: "rgba(0,0,0,0)" },
+        //         xaxis: { gridcolor: "rgba(0,0,0,0)" },
+        //         paper_bgcolor: "rgba(0,0,0,0)",
+        //         plot_bgcolor: "rgba(0,0,0,0)",
+        //     };
 
-            var config = { responsive: true }
-            var data = [trace1, trace2];
-            Plotly.newPlot('leetcode', data, layout, config);
-            window.dispatchEvent(new Event('resize'));
+        //     var config = { responsive: true }
+        //     var data = [trace1, trace2];
+        //     Plotly.newPlot('leetcode', data, layout, config);
+        //     window.dispatchEvent(new Event('resize'));
 
-        })();
+        // })();
 
-        // strava plot
-        (async function () {
-            var trace1 = {
-                type: 'bar',
-                marker: {
-                    color: 'blue',
-                    line: {
-                        width: 2.5
-                    }
-                }
-            };
+        // // strava plot
+        // (async function () {
+        //     var trace1 = {
+        //         type: 'bar',
+        //         marker: {
+        //             color: 'blue',
+        //             line: {
+        //                 width: 2.5
+        //             }
+        //         }
+        //     };
 
-            const url = "https://raw.githubusercontent.com/yrom1/jira-python/main/plot.json"
-            const jira_r = fetch(url)
-                .then((response) => response.json())
-                .then((x) => {
-                    return x;
-                });
-            let jira_json = await jira_r;
-            trace1.x = Object.values(jira_json.date);
-            trace1.y = Object.values(jira_json.value);
+        //     const url = "https://raw.githubusercontent.com/yrom1/jira-python/main/plot.json"
+        //     const jira_r = fetch(url)
+        //         .then((response) => response.json())
+        //         .then((x) => {
+        //             return x;
+        //         });
+        //     let jira_json = await jira_r;
+        //     trace1.x = Object.values(jira_json.date);
+        //     trace1.y = Object.values(jira_json.value);
 
-            var layout = {
-                title: (trace1.y[trace1.y.length - 1]).toString() + " Jira Issues Completed Today",
-                font: { size: 14 },
-                height: HEIGHT,
-                yaxis: { title: { text: "# Completed Issues" }, gridcolor: "rgba(0,0,0,0)" },
-                xaxis: { gridcolor: "rgba(0,0,0,0)" },
-                paper_bgcolor: "rgba(0,0,0,0)",
-                plot_bgcolor: "rgba(0,0,0,0)",
-            };
+        //     var layout = {
+        //         title: (trace1.y[trace1.y.length - 1]).toString() + " Jira Issues Completed Today",
+        //         font: { size: 14, color: TEXT },
+        //         height: HEIGHT,
+        //         yaxis: { title: { text: "# Completed Issues" }, gridcolor: "rgba(0,0,0,0)" },
+        //         xaxis: { gridcolor: "rgba(0,0,0,0)" },
+        //         paper_bgcolor: "rgba(0,0,0,0)",
+        //         plot_bgcolor: "rgba(0,0,0,0)",
+        //     };
 
-            var config = { responsive: true }
-            var data = [trace1];
-            Plotly.newPlot('jira', data, layout, config);
-            window.dispatchEvent(new Event('resize'));
+        //     var config = { responsive: true }
+        //     var data = [trace1];
+        //     Plotly.newPlot('jira', data, layout, config);
+        //     window.dispatchEvent(new Event('resize'));
 
-        })();
+        // })();
     </script>
 
     <footer class="head">
