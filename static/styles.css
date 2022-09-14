@@ -2,9 +2,7 @@
     /* https://tinyclouds.org/ */
     --main-light-color: #ffffff;
     --main-dark-color: #111111;
-    --main-link-color: #58a6ff;
-    /* --main-light-link-color: #58a6ff;
-    --main-dark-link-color: #0969da; */
+    --main-link-color: #0969da;
 }
 
 body {
