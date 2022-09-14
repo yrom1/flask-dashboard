@@ -272,9 +272,7 @@ def fun() -> str:
         <li>The C++ assignments are checked for correctness using an internal system (BusTub) that is unavailable to the public, which is slightly sad because they looked fun.</li>
         <li>While there are many time where Andy Pavlo goes out of his way to show differences in the behavior of different datebases (specifically MySQL, Postgres, and Oracle if I remember), which was often interesting and funny, at the end of the course I didn't feel like I a solid understanding of how exactly specific DBMSs worked internally.</li>
     </ul>
-    As I'm not looking for a systems developer role any time soon, the first point isn't the end of the world. For the second point, and while it's just a start, an Uber Engineering blogpost '<a href="https://www.uber.com/en-CA/blog/postgres-to-mysql-migration/">Why Uber Engineering Switched from Postgres to MySQL</a>'...
-    <img src="https://blog.uber-cdn.com/cdn-cgi/image/width=768,quality=80,onerror=redirect,format=auto/wp-content/uploads/2016/07/MySQL_Index_Property_Header.png">
-    ... I felt did a solid job explaining some specific details about how MySQL and Postgres are implemented, particularily as it relates to indexes.
+    As I'm not looking for a systems developer role any time soon, the first point isn't the end of the world. For the second point, and while it's just a start, an Uber Engineering blogpost '<a href="https://www.uber.com/en-CA/blog/postgres-to-mysql-migration/">Why Uber Engineering Switched from Postgres to MySQL</a>' I felt did a solid job explaining some specific details about how MySQL and Postgres are implemented.
     """,
                 """
     <h1>Dealing with Trolls</h1>
