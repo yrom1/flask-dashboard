@@ -79,8 +79,10 @@
             console.log(Object.values(jira_json.date));
             console.log(trace1);
             var layout = {
-                // title: title,
-                font: { size: 18 }
+                title: (trace1.y[trace1.y.length - 1]).toString() + " Jira Issues Completed Today",
+                font: { size: 18 },
+                xaxis: { title: { text: "Date" } },
+                yaxis: { title: { text: "# Completed Issues" } },
             };
 
             var config = { responsive: true }
