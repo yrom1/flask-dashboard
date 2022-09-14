@@ -67,14 +67,14 @@
         // let DARK_COLOR = window.getComputedStyle(THEME_BUTTON)['background-color'];
         let LIGHT_COLOR = "#fff";
         let DARK_COLOR = "#111";
-        let LIGHT_LINK_COLOR = "#0969da";
-        let DARK_LINK_COLOR = "#58a6ff";
+        let LIGHT_LINK_COLOR = "#58a6ff";
+        let DARK_LINK_COLOR = "#0969da";
 
         function setLightTheme() {
             var bodyStyles = document.body.style;
             bodyStyles.setProperty('--main-background-color', LIGHT_COLOR);
             bodyStyles.setProperty('--main-text-color', DARK_COLOR);
-            bodyStyles.setProperty('--main-link-color', LIGHT_LINK_COLOR);
+            bodyStyles.setProperty('--main-link-color', DARK_LINK_COLOR);
             // let theme_button = document.getElementById("theme-button");
             // theme_button.innerHTML = 'light';
         }
@@ -82,7 +82,7 @@
             var bodyStyles = document.body.style;
             bodyStyles.setProperty('--main-background-color', DARK_COLOR);
             bodyStyles.setProperty('--main-text-color', LIGHT_COLOR);
-            bodyStyles.setProperty('--main-link-color', DARK_LINK_COLOR);
+            bodyStyles.setProperty('--main-link-color', LIGHT_LINK_COLOR);
             // let theme_button = document.getElementById("theme-button");
             // theme_button.innerHTML = 'dark';
         }
@@ -117,7 +117,7 @@
                 // light theme
                 [BACKGROUND, TEXT, LINK] = [LIGHT_COLOR, DARK_COLOR, DARK_LINK_COLOR];
             }
-
+            console.log("making jira plot with link color: " + LINK + "(DARK=" + DARK_LINK_COLOR + ", LIGHT=" + LIGHT_LINK_COLOR + ")")
             var trace1 = {
                 type: 'bar',
                 marker: {
