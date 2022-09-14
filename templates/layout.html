@@ -78,19 +78,25 @@
 
         let HEIGHT = 300;
 
-        console.log(document.getElementById('theme-button').innerHTML)
+        var bodyStyles = document.body.style;
+        // so changes in .css file propogate
+        let THEME_BUTTON = document.getElementById("theme-button");
+        // let LIGHT_COLOR = window.getComputedStyle(THEME_BUTTON)['color'];
+        // let DARK_COLOR = window.getComputedStyle(THEME_BUTTON)['background-color'];
+        let LIGHT_COLOR = "#fff";
+        let DARK_COLOR = "#111";
 
         function setLightTheme() {
             var bodyStyles = document.body.style;
-            bodyStyles.setProperty('--main-light-color', '#eee');
-            bodyStyles.setProperty('--main-dark-color', '#444');
+            bodyStyles.setProperty('--main-light-color', LIGHT_COLOR);
+            bodyStyles.setProperty('--main-dark-color', DARK_COLOR);
             let theme_button = document.getElementById("theme-button");
             theme_button.innerHTML = 'light';
         }
         function setDarkTheme() {
             var bodyStyles = document.body.style;
-            bodyStyles.setProperty('--main-light-color', '#444');
-            bodyStyles.setProperty('--main-dark-color', '#eee');
+            bodyStyles.setProperty('--main-light-color', DARK_COLOR);
+            bodyStyles.setProperty('--main-dark-color', LIGHT_COLOR);
             let theme_button = document.getElementById("theme-button");
             theme_button.innerHTML = 'dark';
         }
@@ -102,8 +108,10 @@
             let theme = document.getElementById("theme-button").innerHTML;
             if (theme == 'light') {
                 setDarkTheme()
+                console.log(document.getElementById('theme-button').innerHTML)
             } else {
                 setLightTheme()
+                console.log(document.getElementById('theme-button').innerHTML)
             }
         }
         // TODO DRY
