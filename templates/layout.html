@@ -56,6 +56,46 @@
     {{ content }}
 
     <script>
+        let HEIGHT = 300;
+        // TODO DRY
+        (async function () {
+            var trace1 = {
+                type: 'bar',
+                marker: {
+                    color: 'blue',
+                    line: {
+                        width: 2.5
+                    }
+                }
+            };
+
+            const url = "https://raw.githubusercontent.com/yrom1/strava-rest/main/plot.json"
+            const jira_r = fetch(url)
+                .then((response) => response.json())
+                .then((x) => {
+                    return x;
+                });
+            let jira_json = await jira_r;
+            trace1.x = Object.values(jira_json.date);
+            trace1.y = Object.values(jira_json.value);
+            console.log(Object.values(jira_json.date));
+            const days_since_last_run = trace1.y.slice().reverse().findIndex((x) => x > 0);
+            console.log(trace1);
+            var layout = {
+                title: days_since_last_run.toString() + " Days Since Last Run",
+                font: { size: 14 },
+                // xaxis: { title: { text: "Date" } },
+                yaxis: { title: { text: "Distance Ran (km)" } },
+                height: HEIGHT,
+            };
+
+            var config = { responsive: true }
+            var data = [trace1];
+            Plotly.newPlot('strava', data, layout, config);
+            window.dispatchEvent(new Event('resize'));
+
+        })();
+
         (async function () {
             var trace1 = {
                 type: 'bar',
@@ -81,9 +121,9 @@
             var layout = {
                 title: (trace1.y[trace1.y.length - 1]).toString() + " Jira Issues Completed Today",
                 font: { size: 14 },
-                xaxis: { title: { text: "Date" } },
+                // xaxis: { title: { text: "Date" } },
                 yaxis: { title: { text: "# Completed Issues" } },
-                height: 300,
+                height: HEIGHT,
             };
 
             var config = { responsive: true }

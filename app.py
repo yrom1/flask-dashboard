@@ -170,7 +170,7 @@ def dashboard() -> str:
                 <td style="background-color:{leetcode_color()};"></td>
             </tr>
             <tr align="center">
-                <td><img src="https://raw.githubusercontent.com/yrom1/strava-rest/main/Strava_run_graph.png"/></td>
+                <td><div id="strava"></div></td>
                 <td style="background-color:{strava_color()};"></td>
             </tr>
         </table>
