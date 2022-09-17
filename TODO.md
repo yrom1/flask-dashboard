@@ -1,1 +1,2 @@
-- Clean up CSS
+- Remove `print`s and `console.log`s
+- Stop trying to render graphs on each page, this quick fix now makes the non-dashboard pages load slower
