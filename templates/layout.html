@@ -132,7 +132,7 @@
             //         return x;
             //     });
             // let jira_json = await jira_r;
-            const strava_json = JSON.parse({{ strava_json|tojson|safe }});
+            const strava_json = JSON.parse(JSON.parse({{ strava_json|tojson|safe }}));
             trace1.x = Object.values(strava_json.date);
             trace1.y = Object.values(strava_json.value);
 
@@ -174,7 +174,7 @@
             //         return x;
             //     });
             // let jira_json = await jira_r;
-            const leetcode_json = JSON.parse({{ leetcode_json|tojson|safe }});
+            const leetcode_json = JSON.parse(JSON.parse({{ leetcode_json|tojson|safe }}));
 
             var trace1 = {
                 type: 'scatter',
@@ -252,7 +252,7 @@
             //         return x;
             //     });
             // let jira_json = await jira_r;
-            const jira_json = JSON.parse({{ jira_json|tojson|safe }});
+            const jira_json = JSON.parse(JSON.parse({{ jira_json|tojson|safe }}));
 
             trace1.x = Object.values(jira_json.date);
             trace1.y = Object.values(jira_json.value);

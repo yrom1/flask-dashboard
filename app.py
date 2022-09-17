@@ -22,11 +22,7 @@ RED = "#FF4136"
 
 
 def jira_color() -> str:
-    ISSUES_DONE_TODAY = int(
-        requests.get(
-            "https://raw.githubusercontent.com/yrom1/jira-python/main/ISSUES_DONE_TODAY"
-        ).text
-    )
+    ISSUES_DONE_TODAY = int(Cloud('kpiV1')["ISSUES_DONE_TODAY"])
     if ISSUES_DONE_TODAY <= 2:
         return RED
     elif ISSUES_DONE_TODAY > 2 and ISSUES_DONE_TODAY <= 3:
@@ -36,11 +32,7 @@ def jira_color() -> str:
 
 
 def leetcode_color() -> str:
-    QUESTIONS_DONE_PAST_WEEK = int(
-        requests.get(
-            "https://raw.githubusercontent.com/yrom1/yrom1/main/QUESTIONS_DONE_PAST_WEEK"
-        ).text
-    )
+    QUESTIONS_DONE_PAST_WEEK = int(Cloud('kpiV1')["QUESTIONS_DONE_PAST_WEEK"])
     if QUESTIONS_DONE_PAST_WEEK >= 7:
         return GREEN
     elif QUESTIONS_DONE_PAST_WEEK >= 4 and QUESTIONS_DONE_PAST_WEEK < 7:
@@ -50,11 +42,7 @@ def leetcode_color() -> str:
 
 
 def strava_color() -> str:
-    DAYS_SINCE_LAST_RUN = int(
-        requests.get(
-            "https://raw.githubusercontent.com/yrom1/strava-rest/main/DAYS_SINCE_LAST_RUN"
-        ).text
-    )
+    DAYS_SINCE_LAST_RUN = int(Cloud('kpiV1')["DAYS_SINCE_LAST_RUN"])
     if DAYS_SINCE_LAST_RUN <= 1:
         return GREEN
     elif DAYS_SINCE_LAST_RUN > 1 and DAYS_SINCE_LAST_RUN <= 2:
