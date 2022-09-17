@@ -62,7 +62,6 @@ def markdown_readme_to_html(url: str) -> str:
 def clean_json(dict_):
     # clean the artifacts dynamodb caused
     ans = simplejson.dumps(dict_, use_decimal=True)
-    print(ans)
     return ans
 
 
@@ -186,6 +185,10 @@ def dashboard() -> str:
 
         <p>
         <b>UPDATE</b> (14 Sep 2022): I switched from Matplotlib to Plotly.js. The main motivation was to make the graphs responsive to screen size changes. Another problem I was having using Matplotlib image files stored in different repositories, was that it combined data and styling. Now each repository provides <i>only</i> a single data file for plotting, 'plot.json', and all the stying code is contained in this repository in JavaScript.
+        <p>
+
+        <p>
+        <b>UPDATE</b> (17 Sep 2022): Now the 'plot.json' and KPI values are stored in DynamoDB tables. This should make adding new metrics or plots much easier. I also made <a href="https://pypi.org/project/cloud-dictionary/">cloud-dictionary</a>, which is a small wrapper around boto3's DynamoDB interface to make the database act like a Python dictionary by implementing the MutableMapping abstract base class. One of the trickier parts was figuring out how to get Flask to render JSON data into the front-end JavaScript, but it's actually quite easy once you find the right part of the documentation. Oh, and I added light and dark themes using the in-browser JavaScript window object's 'prefers-color-scheme', always wondered how that worked.
         <p>
         """
         ),
