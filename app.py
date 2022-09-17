@@ -112,12 +112,17 @@ def kpi(url: str) -> int:
     return int(requests.get(url).text)
 
 
-DAY_OF_MONTH = datetime.now(ZoneInfo("US/Eastern")).date().day
+
 mp = Cloud('kpiV1')
-ISSUES_DONE_THIS_MONTH = int(mp["ISSUES_DONE_THIS_MONTH"])
-LEETCODE_QUESTIONS_THIS_MONTH = int(mp["LEETCODE_QUESTIONS_THIS_MONTH"])
-KMS_RAN_THIS_MONTH = int(mp["KMS_RAN_THIS_MONTH"])
+def ISSUES_DONE_THIS_MONTH():
+    return int(mp["ISSUES_DONE_THIS_MONTH"])
+def LEETCODE_QUESTIONS_THIS_MONTH():
+    return int(mp["LEETCODE_QUESTIONS_THIS_MONTH"])
+def KMS_RAN_THIS_MONTH():
+    return int(mp["KMS_RAN_THIS_MONTH"])
+
 def per_day(metric):
+    DAY_OF_MONTH = datetime.now(ZoneInfo("US/Eastern")).date().day
     return round(metric / DAY_OF_MONTH)
 
 
@@ -140,9 +145,9 @@ def dashboard() -> str:
                 <td>Kilometers Ran</td>
             </tr>
             <tr class="numbers">
-                <td><strong>{ISSUES_DONE_THIS_MONTH}</strong><span class="day">{space}({per_day(ISSUES_DONE_THIS_MONTH)}/day)</span></td>
-                <td><strong>{LEETCODE_QUESTIONS_THIS_MONTH}</strong><span class="day">{space}({per_day(LEETCODE_QUESTIONS_THIS_MONTH)}/day)</span></td>
-                <td><strong>{KMS_RAN_THIS_MONTH}</strong><span class="day">{space}({per_day(KMS_RAN_THIS_MONTH)}/day)</span></td>
+                <td><strong>{ISSUES_DONE_THIS_MONTH()}</strong><span class="day">{space}({per_day(ISSUES_DONE_THIS_MONTH())}/day)</span></td>
+                <td><strong>{LEETCODE_QUESTIONS_THIS_MONTH()}</strong><span class="day">{space}({per_day(LEETCODE_QUESTIONS_THIS_MONTH())}/day)</span></td>
+                <td><strong>{KMS_RAN_THIS_MONTH()}</strong><span class="day">{space}({per_day(KMS_RAN_THIS_MONTH())}/day)</span></td>
             </tr>
         </table>
         <table style="width:100%">
