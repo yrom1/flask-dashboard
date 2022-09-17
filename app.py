@@ -1,10 +1,11 @@
 # save this as app.py
 from datetime import datetime
+from pathlib import Path
 from textwrap import dedent
 from zoneinfo import ZoneInfo
-import simplejson
 
 import requests
+import simplejson
 from bs4 import BeautifulSoup as bs
 from cloud_dictionary import Cloud
 from markdown_code_blocks import highlight
@@ -22,7 +23,7 @@ RED = "#FF4136"
 
 
 def jira_color() -> str:
-    ISSUES_DONE_TODAY = int(Cloud('kpiV1')["ISSUES_DONE_TODAY"])
+    ISSUES_DONE_TODAY = int(Cloud("kpiV1")["ISSUES_DONE_TODAY"])
     if ISSUES_DONE_TODAY <= 2:
         return RED
     elif ISSUES_DONE_TODAY > 2 and ISSUES_DONE_TODAY <= 3:
@@ -32,7 +33,7 @@ def jira_color() -> str:
 
 
 def leetcode_color() -> str:
-    QUESTIONS_DONE_PAST_WEEK = int(Cloud('kpiV1')["QUESTIONS_DONE_PAST_WEEK"])
+    QUESTIONS_DONE_PAST_WEEK = int(Cloud("kpiV1")["QUESTIONS_DONE_PAST_WEEK"])
     if QUESTIONS_DONE_PAST_WEEK >= 7:
         return GREEN
     elif QUESTIONS_DONE_PAST_WEEK >= 4 and QUESTIONS_DONE_PAST_WEEK < 7:
@@ -42,7 +43,7 @@ def leetcode_color() -> str:
 
 
 def strava_color() -> str:
-    DAYS_SINCE_LAST_RUN = int(Cloud('kpiV1')["DAYS_SINCE_LAST_RUN"])
+    DAYS_SINCE_LAST_RUN = int(Cloud("kpiV1")["DAYS_SINCE_LAST_RUN"])
     if DAYS_SINCE_LAST_RUN <= 1:
         return GREEN
     elif DAYS_SINCE_LAST_RUN > 1 and DAYS_SINCE_LAST_RUN <= 2:
@@ -112,14 +113,20 @@ def kpi(url: str) -> int:
     return int(requests.get(url).text)
 
 
+mp = Cloud("kpiV1")
 
-mp = Cloud('kpiV1')
+
 def ISSUES_DONE_THIS_MONTH():
     return int(mp["ISSUES_DONE_THIS_MONTH"])
+
+
 def LEETCODE_QUESTIONS_THIS_MONTH():
     return int(mp["LEETCODE_QUESTIONS_THIS_MONTH"])
+
+
 def KMS_RAN_THIS_MONTH():
     return int(mp["KMS_RAN_THIS_MONTH"])
+
 
 def per_day(metric):
     DAY_OF_MONTH = datetime.now(ZoneInfo("US/Eastern")).date().day
@@ -127,6 +134,7 @@ def per_day(metric):
 
 
 space = " " * 2
+
 
 @app.route("/dashboard")
 def dashboard() -> str:
@@ -234,50 +242,14 @@ def postgrespy() -> str:
     return render(markdown_readme_to_html(url), title="Ryan | postgrespy")
 
 
-@app.route("/fun")
-def fun() -> str:
+@app.route("/blog")
+def blog() -> str:
+    blogposts = ["./" + str(x) for x in list(Path("./static/blogs").glob("*"))]
+    list_of_html_blogposts = []
+    for blogpost in blogposts:
+        with open(blogpost, "r") as f:
+            list_of_html_blogposts.append(f.read())
     return render(
-        "<hr>".join(
-            [
-                """
-    <h1>Etch a sketch</h1>
-    <!-- ETCH-A-SKETCH  -->
-    <p>Move your mouse around in the box!</p>
-    <div id="container"></div>
-
-    <form id="etch-form">
-        <button type="submit">reset</button><br>
-        <label for="fun-check">fun</label>
-        <input type="checkbox" name="fun-check"></input>
-    </form>
-
-    <form id="etch-fun-form">
-    </form>
-
-    <script src="/static/etch.js"></script>
-    <!-- --- -->
-    <p>I made this as part of <a href="https://www.theodinproject.com/">The Odin Project</a> when I was thinking of becoming a front-end developer.</p>
-    """,
-                """<h1>Python3 Metaprogramming</h1>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/sPiWg5jSoZI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    <p>This is a wonderful talk by <a href="https://en.wikipedia.org/wiki/David_M._Beazley">David Beazley</a>, and despite being a very old talk is still up to date because it was about an early version of Python3 at the time. One of the exercises left to the reader in this tutorial is to make a class decorator that works with <code>@staticmethod</code>s, and <code>@classmethod</code>s, something that you actually don't see a lot. And that challenge was what inspired me to make my exception logging package on PyPI (<a href="https://pypi.org/project/exlog/">exlog</a>). And I'm glad I did, because otherwise I wouldn't of understood why class decorators and metaclasses work together so seamlessly.</p>
-    """,
-                """
-    <h1>CMU 15-445/645</h1>
-    <p>A <a href="https://15445.courses.cs.cmu.edu/fall2019/">great database course</a> is given by <a href="https://twitter.com/andy_pavlo">Andy Pavlo</a>, who is objectively hilarious. His course begins by him presenting from his bathtub during COVID:</p>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLSE8ODhjZXjbohkNBWQs_otTrBTrjyohi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    <p>I would give two downsides about auditing this course, which I should note I thought was otherwise very excellent:</p>
-    <ul>
-        <li>The C++ assignments are checked for correctness using an internal system (BusTub) that is unavailable to the public, which is slightly sad because they looked fun.</li>
-        <li>While there are many time where Andy Pavlo goes out of his way to show differences in the behavior of different datebases (specifically MySQL, Postgres, and Oracle if I remember), which was often interesting and funny, at the end of the course I didn't feel like I a solid understanding of how exactly specific DBMSs worked internally.</li>
-    </ul>
-    As I'm not looking for a systems developer role any time soon, the first point isn't the end of the world. For the second point, and while it's just a start, an Uber Engineering blogpost '<a href="https://www.uber.com/en-CA/blog/postgres-to-mysql-migration/">Why Uber Engineering Switched from Postgres to MySQL</a>' I felt did a solid job explaining some specific details about how MySQL and Postgres are implemented.
-    """,
-                """
-    <h1>Dealing with Trolls</h1>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/EBRMq2Ioxsc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    <p>I really like this keynote by <a href="https://en.wikipedia.org/wiki/Guido_van_Rossum">Guido van Rossum</a>, it contextualizes a lot of the criticisms one hears about Python. Which for some reason online, are fairly common and widespread.</p>""",
-            ]
-        ),
-        title="Ryan | fun",
+        "<hr>".join(list_of_html_blogposts),
+        title="Ryan | blog",
     )
