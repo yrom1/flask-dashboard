@@ -229,19 +229,3 @@ def projects():
         ans,
         title="Ryan | projects",
     )
-
-
-@app.route("/blog")
-def blog() -> str:
-    blogposts = ["./" + str(x) for x in list(Path("./static/blogs").glob("*"))]
-    list_of_html_blogposts = []
-    for blogpost in blogposts:
-        with open(blogpost, "r") as f:
-            list_of_html_blogposts.append((blogpost.split("_")[0], f.read()))
-    list_of_html_blogposts = [
-        x for _, x in sorted(list_of_html_blogposts, key=lambda x: x[0], reverse=True)
-    ]
-    return render(
-        "<hr>".join(list_of_html_blogposts),
-        title="Ryan | blog",
-    )
