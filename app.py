@@ -65,7 +65,7 @@ def clean_json(dict_):
     return ans
 
 
-def render(content, *, title="Ryan Moore", head=""):
+def render(content, *, title="Ryan Moore", head="", dashboard=False):
     mp = Cloud("plotsV2")
     # NOTE Must trust content!
     return render_template(
@@ -76,6 +76,7 @@ def render(content, *, title="Ryan Moore", head=""):
         jira_json=clean_json(mp["jira"]),
         leetcode_json=clean_json(mp["leetcode"]),
         strava_json=clean_json(mp["strava"]),
+        dashboard=dashboard,
     )
 
 
@@ -202,6 +203,7 @@ def dashboard() -> str:
         """
         ),
         title="Ryan | dashboard",
+        dashboard=True,
     )
 
 
