@@ -93,22 +93,6 @@ def index() -> str:
     )
 
 
-@app.route("/about")
-def about() -> str:
-    return render(
-        """
-    <h1>About me</h1>
-    <ul>
-        <li>2+ years of paid experience coding</li>
-        <li>Strong Python and SQL skills</li>
-        <li>Engineering master's degree</li>
-    </ul>
-    <p>Feel free to email me. A resume can be provided on request.</p>
-    """,
-        title="Ryan | about me",
-    )
-
-
 def kpi(url: str) -> int:
     return int(requests.get(url).text)
 
