@@ -107,7 +107,7 @@
         // }
         // TODO DRY
 
-        // jira plot
+        // strava plot
         (async function () {
             let [BACKGROUND, TEXT, LINK] = ["", "", ""];
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -226,7 +226,7 @@
 
         })();
 
-        // strava plot
+        // jira plot
         (async function () {
             let [BACKGROUND, TEXT, LINK] = ["", "", ""];
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -243,13 +243,15 @@
                 }
             };
 
-            const url = "https://raw.githubusercontent.com/yrom1/jira-python/main/plot.json"
-            const jira_r = fetch(url)
-                .then((response) => response.json())
-                .then((x) => {
-                    return x;
-                });
-            let jira_json = await jira_r;
+            // const url = "https://raw.githubusercontent.com/yrom1/jira-python/main/plot.json"
+            // const jira_r = fetch(url)
+            //     .then((response) => response.json())
+            //     .then((x) => {
+            //         return x;
+            //     });
+            // let jira_json = await jira_r;
+            const jira_json = JSON.parse({{ jira_json|tojson|safe }});
+
             trace1.x = Object.values(jira_json.date);
             trace1.y = Object.values(jira_json.value);
 

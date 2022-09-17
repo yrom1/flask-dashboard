@@ -4,3 +4,5 @@ markdown_code_blocks
 beautifulsoup4
 requests
 lxml
+cloud_dictionary
+simplejson

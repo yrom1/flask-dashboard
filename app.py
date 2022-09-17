@@ -1,16 +1,18 @@
 # save this as app.py
+from datetime import datetime
 from textwrap import dedent
+from zoneinfo import ZoneInfo
+import simplejson
 
 import requests
 from bs4 import BeautifulSoup as bs
+from cloud_dictionary import Cloud
 from markdown_code_blocks import highlight
 from markupsafe import Markup, escape
 
-from datetime import datetime
-from zoneinfo import ZoneInfo
+from flask import Flask, render_template, send_from_directory, url_for
 
-from flask import Flask, render_template, url_for
-
+DYNAMODICT = Cloud("plotsV2")
 app = Flask(__name__)
 
 # https://clrs.cc/
@@ -69,18 +71,25 @@ def markdown_readme_to_html(url: str) -> str:
     return html
 
 
+def clean_json(dict_):
+    # clean the artifacts dynamodb caused
+    ans = simplejson.dumps(dict_, use_decimal=True)
+    print(ans)
+    return ans
+
+
 def render(content, *, title="Ryan Moore", head=""):
+    mp = Cloud("plotsV2")
     # NOTE Must trust content!
     return render_template(
         "layout.html",
         content=Markup(content),
         title=Markup(title),
         head=Markup(head),
+        jira_json=clean_json(mp["jira"]),
+        # leetcode_json=clean_json(mp["leetcode"]),
+        # strava_json=clean_json(mp["strava"]),
     )
-
-
-# @app.route("/")
-# TODO ?
 
 
 @app.route("/")
@@ -132,7 +141,6 @@ def per_day(metric):
 
 
 space = " " * 2
-
 
 @app.route("/dashboard")
 def dashboard() -> str:
