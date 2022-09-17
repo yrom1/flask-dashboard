@@ -214,32 +214,37 @@ def dashboard() -> str:
         dashboard=True,
     )
 
+import subprocess
 
-@app.route("/mypandas")
-def mypandas() -> str:
-    url = "https://raw.githubusercontent.com/yrom1/mypandas/main/README.md"
+def repo_description(project: str) -> str:
+    cmd = f"curl -s https://github.com/yrom1/{project} | grep \/title"
+    x = subprocess.run(cmd, shell=True, capture_output=True).stdout.decode('utf-8').split(':')[1].strip()
+    return x[:x.find('<')]
+
+@app.route("/projects")
+def projects():
+    project_names = [
+        'cloud-dictionary',
+        'mypandas',
+        'ty',
+        'exception-logging',
+        'postgrespy',
+    ]
+    projects = {
+        name: {
+            'readme': f"https://raw.githubusercontent.com/yrom1/{name}/main/README.md",
+            'tagline': repo_description(name),
+        }
+     for name in project_names}
+    ans = ""
+    for project in projects:
+        ans += '<h3 style="text-align: left;">' + project + '</h3>' + f'<p>{projects[project]["tagline"]}</p>'
+    ans += '<hr>'
+    ans += '<hr>'.join([markdown_readme_to_html(projects[project]['readme']) for project in projects])
     return render(
-        markdown_readme_to_html(url),
-        title="Ryan | mypandas",
+        ans,
+        title="Ryan | projects",
     )
-
-
-@app.route("/ty")
-def ty() -> str:
-    url = "https://raw.githubusercontent.com/yrom1/ty/main/README.md"
-    return render(markdown_readme_to_html(url), title="Ryan | ty")
-
-
-@app.route("/exlog")
-def exlog() -> str:
-    url = "https://raw.githubusercontent.com/yrom1/exception-logging/main/README.md"
-    return render(markdown_readme_to_html(url), title="Ryan | exlog")
-
-
-@app.route("/postgrespy")
-def postgrespy() -> str:
-    url = "https://raw.githubusercontent.com/yrom1/postgrespy/main/README.md"
-    return render(markdown_readme_to_html(url), title="Ryan | postgrespy")
 
 
 @app.route("/blog")
