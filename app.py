@@ -87,8 +87,8 @@ def render(content, *, title="Ryan Moore", head=""):
         title=Markup(title),
         head=Markup(head),
         jira_json=clean_json(mp["jira"]),
-        # leetcode_json=clean_json(mp["leetcode"]),
-        # strava_json=clean_json(mp["strava"]),
+        leetcode_json=clean_json(mp["leetcode"]),
+        strava_json=clean_json(mp["strava"]),
     )
 
 
@@ -125,17 +125,10 @@ def kpi(url: str) -> int:
 
 
 DAY_OF_MONTH = datetime.now(ZoneInfo("US/Eastern")).date().day
-ISSUES_DONE_THIS_MONTH = kpi(
-    "https://raw.githubusercontent.com/yrom1/jira-python/main/ISSUES_DONE_THIS_MONTH"
-)
-LEETCODE_QUESTIONS_THIS_MONTH = kpi(
-    "https://raw.githubusercontent.com/yrom1/yrom1/main/LEETCODE_QUESTIONS_THIS_MONTH"
-)
-KMS_RAN_THIS_MONTH = kpi(
-    "https://raw.githubusercontent.com/yrom1/strava-rest/main/KMS_RAN_THIS_MONTH"
-)
-
-
+mp = Cloud('kpiV1')
+ISSUES_DONE_THIS_MONTH = int(mp["ISSUES_DONE_THIS_MONTH"])
+LEETCODE_QUESTIONS_THIS_MONTH = int(mp["LEETCODE_QUESTIONS_THIS_MONTH"])
+KMS_RAN_THIS_MONTH = int(mp["KMS_RAN_THIS_MONTH"])
 def per_day(metric):
     return round(metric / DAY_OF_MONTH)
 

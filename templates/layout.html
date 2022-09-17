@@ -125,15 +125,16 @@
                 }
             };
 
-            const url = "https://raw.githubusercontent.com/yrom1/strava-rest/main/plot.json"
-            const jira_r = fetch(url)
-                .then((response) => response.json())
-                .then((x) => {
-                    return x;
-                });
-            let jira_json = await jira_r;
-            trace1.x = Object.values(jira_json.date);
-            trace1.y = Object.values(jira_json.value);
+            // const url = "https://raw.githubusercontent.com/yrom1/strava-rest/main/plot.json"
+            // const jira_r = fetch(url)
+            //     .then((response) => response.json())
+            //     .then((x) => {
+            //         return x;
+            //     });
+            // let jira_json = await jira_r;
+            const strava_json = JSON.parse({{ strava_json|tojson|safe }});
+            trace1.x = Object.values(strava_json.date);
+            trace1.y = Object.values(strava_json.value);
 
             const days_since_last_run = trace1.y.slice().reverse().findIndex((x) => x > 0);
 
@@ -166,13 +167,14 @@
                 // light theme
                 [BACKGROUND, TEXT, LINK] = [LIGHT_COLOR, DARK_COLOR, DARK_LINK_COLOR];
             }
-            const url = "https://raw.githubusercontent.com/yrom1/yrom1/main/plot.json"
-            const jira_r = fetch(url)
-                .then((response) => response.json())
-                .then((x) => {
-                    return x;
-                });
-            let jira_json = await jira_r;
+            // const url = "https://raw.githubusercontent.com/yrom1/yrom1/main/plot.json"
+            // const jira_r = fetch(url)
+            //     .then((response) => response.json())
+            //     .then((x) => {
+            //         return x;
+            //     });
+            // let jira_json = await jira_r;
+            const leetcode_json = JSON.parse({{ leetcode_json|tojson|safe }});
 
             var trace1 = {
                 type: 'scatter',
@@ -184,8 +186,8 @@
                     }
                 }
             };
-            trace1.x = Object.values(jira_json.py_dates);
-            trace1.y = Object.values(jira_json.py_ranks);
+            trace1.x = Object.values(leetcode_json.py_dates);
+            trace1.y = Object.values(leetcode_json.py_ranks);
 
             var trace2 = {
                 type: 'scatter',
@@ -197,8 +199,8 @@
                     }
                 }
             };
-            trace2.x = Object.values(jira_json.sql_dates);
-            trace2.y = Object.values(jira_json.sql_ranks);
+            trace2.x = Object.values(leetcode_json.sql_dates);
+            trace2.y = Object.values(leetcode_json.sql_ranks);
 
             let py_rank = trace1.y.slice();
             let sql_rank = trace2.y.slice();
