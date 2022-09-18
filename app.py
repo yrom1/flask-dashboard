@@ -46,9 +46,9 @@ def leetcode_color() -> str:
 
 def strava_color() -> str:
     DAYS_SINCE_LAST_RUN = int(Cloud("kpiV1")["DAYS_SINCE_LAST_RUN"])
-    if DAYS_SINCE_LAST_RUN <= 1:
+    if DAYS_SINCE_LAST_RUN <= 2:
         return GREEN
-    elif DAYS_SINCE_LAST_RUN > 1 and DAYS_SINCE_LAST_RUN <= 2:
+    elif DAYS_SINCE_LAST_RUN > 2 and DAYS_SINCE_LAST_RUN <= 4:
         return YELLOW
     else:
         return RED
