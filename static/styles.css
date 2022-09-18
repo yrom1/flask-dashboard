@@ -1,9 +1,32 @@
 :root {
     /* https://tinyclouds.org/ */
-    --main-background-color: #ffffff;
+    --main-background-color: #eaeaea;
     --main-text-color: #111111;
     --main-link-color: #0969da;
 }
+
+.default {
+    color: black;
+    --main-background-color: #eaeaea;
+    --main-text-color: #111111;
+    --main-link-color: #0969da;
+}
+
+@media (prefers-color-scheme: dark) {
+    .default.dark-scheme {
+        background: black;
+        color: #eaeaea;
+        --main-link-color: #58a6ff;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    /* .default.light-scheme {} */
+}
+
+.day,
+.night {}
+
 
 body {
     font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
