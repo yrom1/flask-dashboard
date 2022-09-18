@@ -38,7 +38,7 @@ def leetcode_color() -> str:
     QUESTIONS_DONE_PAST_WEEK = int(Cloud("kpiV1")["QUESTIONS_DONE_PAST_WEEK"])
     if QUESTIONS_DONE_PAST_WEEK >= 7:
         return GREEN
-    elif QUESTIONS_DONE_PAST_WEEK >= 4 and QUESTIONS_DONE_PAST_WEEK < 7:
+    elif QUESTIONS_DONE_PAST_WEEK >= 3 and QUESTIONS_DONE_PAST_WEEK < 7:
         return YELLOW
     else:
         return RED
