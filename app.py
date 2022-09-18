@@ -1,4 +1,6 @@
 # save this as app.py
+import subprocess
+import time
 from datetime import datetime
 from pathlib import Path
 from textwrap import dedent
@@ -78,6 +80,7 @@ def render(content, *, title="Ryan Moore", head="", dashboard=False):
         leetcode_json=clean_json(mp["leetcode"]),
         strava_json=clean_json(mp["strava"]),
         dashboard=dashboard,
+        UNIX_TIMESTAMP=int(time.time()),
     )
 
 
@@ -198,38 +201,54 @@ def dashboard() -> str:
         dashboard=True,
     )
 
-import subprocess
 
 def repo_description(project: str) -> str:
     cmd = f"curl -s https://github.com/yrom1/{project} | grep \/title"
-    x = subprocess.run(cmd, shell=True, capture_output=True).stdout.decode('utf-8').split(':')[1].strip()
-    return x[:x.find('<')]
+    x = (
+        subprocess.run(cmd, shell=True, capture_output=True)
+        .stdout.decode("utf-8")
+        .split(":")[1]
+        .strip()
+    )
+    return x[: x.find("<")]
+
 
 @app.route("/projects")
 def projects():
     project_names = [
-        'cloud-dictionary',
-        'mypandas',
-        'ty',
-        'exception-logging',
-        'postgrespy',
+        "cloud-dictionary",
+        "mypandas",
+        "ty",
+        "exception-logging",
+        "postgrespy",
     ]
     projects = {
         name: {
-            'readme': f"https://raw.githubusercontent.com/yrom1/{name}/main/README.md",
-            'tagline': repo_description(name),
+            "readme": f"https://raw.githubusercontent.com/yrom1/{name}/main/README.md",
+            "tagline": repo_description(name),
         }
-     for name in project_names}
+        for name in project_names
+    }
     ans = ""
     for project in projects:
-        ans += f'<h3 style="text-align: left;"><a href="#{project}">' + project + '</a></h3>' + f'<p>{projects[project]["tagline"]}</p>'
-    ans += '<hr>'
-    ans += '<hr>'.join([
-        # a lil hacky to get hyperlinks to titles
-        # depends on first line of every readme being a title which can replace
-        f'<h1 id="{project}">{project}</h1>' +
-        '\n'.join(markdown_readme_to_html(projects[project]['readme']).splitlines()[1:]) for project in projects
-        ])
+        ans += (
+            f'<h3 style="text-align: left;"><a href="#{project}">'
+            + project
+            + "</a></h3>"
+            + f'<p>{projects[project]["tagline"]}</p>'
+        )
+    ans += "<hr>"
+    ans += "<hr>".join(
+        [
+            # a lil hacky to get hyperlinks to titles
+            # depends on first line of every readme being a title which can replace
+            f'<h1 id="{project}">{project}</h1>'
+            + "\n".join(
+                markdown_readme_to_html(projects[project]["readme"]).splitlines()[1:]
+            )
+            for project in projects
+        ]
+    )
     return render(
         ans,
         title="Ryan | projects",
