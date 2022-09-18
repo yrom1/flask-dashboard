@@ -222,9 +222,14 @@ def projects():
      for name in project_names}
     ans = ""
     for project in projects:
-        ans += '<h3 style="text-align: left;">' + project + '</h3>' + f'<p>{projects[project]["tagline"]}</p>'
+        ans += f'<h3 style="text-align: left;"><a href="#{project}">' + project + '</a></h3>' + f'<p>{projects[project]["tagline"]}</p>'
     ans += '<hr>'
-    ans += '<hr>'.join([markdown_readme_to_html(projects[project]['readme']) for project in projects])
+    ans += '<hr>'.join([
+        # a lil hacky to get hyperlinks to titles
+        # depends on first line of every readme being a title which can replace
+        f'<h1 id="{project}">{project}</h1>' +
+        '\n'.join(markdown_readme_to_html(projects[project]['readme']).splitlines()[1:]) for project in projects
+        ])
     return render(
         ans,
         title="Ryan | projects",
