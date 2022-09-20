@@ -3,6 +3,7 @@ import subprocess
 import time
 from datetime import datetime
 from pathlib import Path
+from random import choice
 from textwrap import dedent
 from zoneinfo import ZoneInfo
 
@@ -120,11 +121,44 @@ def per_day(metric):
     return round(metric / DAY_OF_MONTH)
 
 
+class RandomQuote:
+    def __init__(self):
+        self._quotes = [
+            # (quote, author, book)
+            (
+                "With computers available, it is a waste to perform calculations by hand.",
+                "Taiichi Ohno",
+                "Toyota Production System Beyond Large-Scale Production",
+            ),
+            (
+                "The numbers have no way of speaking for themselves. We speak for them. We imbue them with meaning.",
+                "Nate Silver",
+                "The Signal and the Noise",
+            ),
+        ]
+        for quote in self._quotes:
+            assert len(quote) == 3
+        self._index = choice(range(len(self._quotes)))
+
+    @property
+    def quote(self):
+        return self._quotes[self._index][0]
+
+    @property
+    def author(self):
+        return self._quotes[self._index][1]
+
+    @property
+    def book(self):
+        return self._quotes[self._index][2]
+
+
 space = " " * 2
 
 
 @app.route("/dashboard")
 def dashboard() -> str:
+    quote = RandomQuote()
     return render(
         dedent(
             f"""\
@@ -162,7 +196,7 @@ def dashboard() -> str:
                 <td style="background-color:{strava_color()};"></td>
             </tr>
         </table>
-        <blockquote><p>With computers available, it is a waste to perform calculations by hand.</p></blockquote><figcaption>—Taiichi Ohno, <cite class="cite">Toyota Production System Beyond Large-Scale Production</cite></figcaption>
+        <blockquote><p>{quote.quote}</p></blockquote><figcaption>—{quote.author}, <cite class="cite">{quote.book}</cite></figcaption>
         <h2>Dashboard Explanation</h2>
         <p>This dashboard tracks some useful KPIs about myself, specifically:</p>
         <ul>
