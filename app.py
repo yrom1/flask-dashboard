@@ -236,7 +236,7 @@ def dashboard() -> str:
 
 
 def repo_description(project: str) -> str:
-    cmd = f"curl -s https://github.com/yrom1/{project} | grep \/title"
+    cmd = f"curl -s https://github.com/yrom1/{project} | grep /title"
     x = (
         subprocess.run(cmd, shell=True, capture_output=True)
         .stdout.decode("utf-8")

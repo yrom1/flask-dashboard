@@ -6,4 +6,4 @@ requests
 lxml
 cloud_dictionary
 simplejson
-mypy
+pyright

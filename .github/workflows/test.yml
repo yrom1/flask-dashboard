@@ -17,4 +17,4 @@ jobs:
       - name: Install requirements
         run: pip install -r requirements.txt
       - name: Type check
-        run: python -m mypy --pretty .
+        run: python -m pyright .
