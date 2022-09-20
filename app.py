@@ -129,10 +129,10 @@ def dashboard() -> str:
         dedent(
             f"""\
         <p align="center">This page automatically refreshes every 5 minutes to update the dashboard.</p>
-        <h1 id="Dashboard">Personal dashboard</h1>
+        <h1 id="Dashboard">Personal Dashboard</h1>
         <table style="width:100%">
             <tr>
-                <th style="text-align:left" colspan="3"><b><i>This month —</i></b></th>
+                <th style="text-align:left" colspan="3"><b><i>This Month —</i></b></th>
             </tr>
             <tr class="metrics">
                 <td>Issues Completed</td>
@@ -164,7 +164,7 @@ def dashboard() -> str:
             </tr>
         </table>
         <blockquote><p>With computers available, it is a waste to perform calculations by hand.</p></blockquote><figcaption>—Taiichi Ohno, <cite class="cite">Toyota Production System Beyond Large-Scale Production</cite></figcaption>
-        <h2>Dashboard explanation</h2>
+        <h2>Dashboard Explanation</h2>
         <p>This dashboard tracks some useful KPIs about myself, specifically:</p>
         <ul>
             <li>The first graph is about Jira, issue tracking software. I find it helpful to see how much effort I've been exerting recently, measured by the number of Jira issues completed, i.e. put in the 'Done' column of a Jira kanban board.</li>
@@ -197,7 +197,7 @@ def dashboard() -> str:
             </style>
         """
         ),
-        title="Ryan | dashboard",
+        title="Ryan | Dashboard",
         dashboard=True,
     )
 
@@ -251,5 +251,5 @@ def projects():
     )
     return render(
         ans,
-        title="Ryan | projects",
+        title="Ryan | Projects",
     )

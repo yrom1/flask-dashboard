@@ -16,7 +16,7 @@
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://yrom1.ca/">
     <meta property="og:title" content="Ryan Moore">
-    <meta property="og:description" content="Personal dashboard">
+    <meta property="og:description" content="Personal Dashboard">
     <meta property="og:image" itemprop="image"
         content="https://raw.githubusercontent.com/yrom1/opengraph-preview/main/preview.png?v={{ UNIX_TIMESTAMP }}">
 
@@ -24,7 +24,7 @@
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://yrom1.ca/">
     <meta property="twitter:title" content="Ryan Moore">
-    <meta property="twitter:description" content="Personal dashboard">
+    <meta property="twitter:description" content="Personal Dashboard">
     <meta property="twitter:image"
         content="https://raw.githubusercontent.com/yrom1/opengraph-preview/main/preview.png?v={{ UNIX_TIMESTAMP }}">
     <!-- END PREVIEW -->
@@ -40,9 +40,9 @@
         <!-- <img alt="credit: Jean-Pol GRANDMONT" class="ginkgo" src="/static/trees.webp" /> -->
         <h1>Ryan Moore</h1>
         <h2>
-            <a href="{{ url_for('dashboard') }}">dashboard</a>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
             |
-            <a href="{{ url_for('projects') }}">projects</a>
+            <a href="{{ url_for('projects') }}">Projects</a>
         </h2>
         <hr />
     </header>
@@ -130,7 +130,7 @@
         const days_since_last_run = trace1.y.slice().reverse().findIndex((x) => x > 0);
 
         var layout = {
-            title: days_since_last_run.toString() + " Days Since Last Run",
+            title: days_since_last_run.toString() + " Days Since Last Strava Run",
             font: { size: 14, color: TEXT },
             // xaxis: { title: { text: "Date" } },
             yaxis: { title: { text: "Distance Ran (km)" }, gridcolor: "rgba(0,0,0,0)" },
@@ -270,9 +270,9 @@
     <footer class="head">
         <hr />
         <h2>
-            <a href="mailto:ryanm.inbox@gmail.com">email</a>
+            <a href="mailto:ryanm.inbox@gmail.com">Email</a>
             |
-            <a href="http://github.com/yrom1">github</a>
+            <a href="http://github.com/yrom1">Github</a>
         </h2>
         <!-- <img alt="credit: Jean-Pol GRANDMONT" class="ginkgo" src="/static/trees.webp" /> -->
     </footer>
