@@ -128,7 +128,6 @@ def dashboard() -> str:
     return render(
         dedent(
             f"""\
-        <p align="center">This page automatically refreshes every 5 minutes to update the dashboard.</p>
         <h1 id="Dashboard">Personal Dashboard</h1>
         <table style="width:100%">
             <tr>

@@ -1,3 +1,4 @@
 - [x] Remove `print`s and `console.log`s
 - [x] Stop trying to render graphs on each page, this quick fix now makes the non-dashboard pages load slower
 - [ ] Now that dashboard isnt tried to be rendered on each page, setting the theme using javascript is quite messy, use CSS @media instead
+- [ ] Look into regression of andon colors updating automatically (possibly)
