@@ -219,6 +219,13 @@ def dashboard() -> str:
         <p>
         <b>UPDATE</b> (17 Sep 2022): Now the 'plot.json' and KPI values are stored in DynamoDB tables. This should make adding new metrics or plots much easier. I also made <a href="https://pypi.org/project/cloud-dictionary/">cloud-dictionary</a>, which is a small wrapper around boto3's DynamoDB interface to make the database act like a Python dictionary by implementing the MutableMapping abstract base class. One of the trickier parts was figuring out how to get Flask to render JSON data into the front-end JavaScript, but it's actually quite easy once you find the right part of the documentation. Oh, and I added light and dark themes using the in-browser JavaScript window object's 'prefers-color-scheme', always wondered how that worked.
         <p>
+
+        <p>
+        <b>UPDATE</b> (24 Sep 2022): I've set up a small data warehouse on Amazon RDS. The motivation is I want to make a monthly overview dot plot, showing how I did each day of the month by the color of the dots, so I'll need to save historical data. I decided on a <a href="https://github.com/yrom1/star-schema">star-schema</a>, where the fact table stores daily snapshots of various metrics. I used Git submodules to share the star-schema code with the metric tracking repositories, and I also used a symbolic link to hoist the submodules main Python file into the host repository (so it could be imported in Python). In the future, I'll probably make the star-schema submodule pip installable (for local use not on PyPI), so you don't need to manually copy and paste things like the submodule's dependencies.
+        </p>
+        <p>
+        At this point, the website works as follows: GitHub Action tracker repositories generate -> Daily metrics data -> Stored in an Amazon RDS star schema -> Queried to create KPIs and JSON plot data -> Stored in DynamoDB tables -> Flask uses to fill in HTML templates -> Plots generated in the browser by Plotly.js!
+        </p>
         """
         ),
         head=dedent(
