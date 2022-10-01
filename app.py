@@ -282,7 +282,7 @@ def projects():
         [
             # a lil hacky to get hyperlinks to titles
             # depends on first line of every readme being a title which can replace
-            f'<a href="#">⬆</a><h1 id="{project}">{project}</h1>'
+            f'<a href="#">⬆</a><h1 id="{project}">{project} — <a href="https://github.com/yrom1/{project}" target="_blank">source</a></h1>'
             + "\n".join(
                 markdown_readme_to_html(projects[project]["readme"]).splitlines()[1:]
             )
