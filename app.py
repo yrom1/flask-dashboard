@@ -258,7 +258,7 @@ def projects():
     project_names = [
         "cloud-dictionary",
         "mypandas",
-        "ty",
+        "ty-command",
         "exception-logging",
         "postgrespy",
     ]
