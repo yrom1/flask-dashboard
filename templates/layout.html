@@ -9,25 +9,6 @@
         {{ title }}
     </title>
     <link href="/static/styles.css" rel="stylesheet" />
-
-    <!-- START PREVIEW -->
-    <!-- Open Graph -->
-    <meta property="og:updated_time" content="{{ UNIX_TIMESTAMP }}" />
-    <meta property="og:type" content="article">
-    <meta property="og:url" content="https://yrom1.ca/">
-    <meta property="og:title" content="Ryan Moore">
-    <meta property="og:description" content="Personal Dashboard">
-    <meta property="og:image" itemprop="image"
-        content="https://raw.githubusercontent.com/yrom1/opengraph-preview/main/preview.png?v={{ UNIX_TIMESTAMP }}">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://yrom1.ca/">
-    <meta property="twitter:title" content="Ryan Moore">
-    <meta property="twitter:description" content="Personal Dashboard">
-    <meta property="twitter:image"
-        content="https://raw.githubusercontent.com/yrom1/opengraph-preview/main/preview.png?v={{ UNIX_TIMESTAMP }}">
-    <!-- END PREVIEW -->
     {{ head }}
     <script src='https://cdn.plot.ly/plotly-2.14.0.min.js'></script>
 </head>

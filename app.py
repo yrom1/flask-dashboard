@@ -209,7 +209,7 @@ def dashboard() -> str:
         <p>The general idea for this dashboard is about using GitHub Actions to run Python scripts to update the graph image files and KPIs such as 'DAYS_SINCE_LAST_RUN', which I store in public GitHub repositories. If needed data is scraped and stored in a SQLite database, this is only needed for the LeetCode metrics as Jira and Strava store the data for me. Based on the KPIs the andon green-yellow-red colors are updated every time the page is refreshed by Flask. The KPIs themselves are stored as plain text in the relevant GitHub repositories.</p>
 
         <p>
-            Relevant source code repos: <a href="https://github.com/yrom1/jira-python">Jira</a>, <a href="https://github.com/yrom1/yrom1">LeetCode</a>, <a href="https://github.com/yrom1/strava-rest">Strava</a>, <a href="https://github.com/yrom1/flask">this Flask website</a>, the <a href="https://github.com/yrom1/opengraph-preview">Open Graph dynamic preview image</a> and an <a href="https://github.com/yrom1/sqlite-etl">ETL repo</a> used when I switched from a flat-file database to a SQLite database.
+            Relevant source code repos: <a href="https://github.com/yrom1/jira-python">Jira</a>, <a href="https://github.com/yrom1/yrom1">LeetCode</a>, <a href="https://github.com/yrom1/strava-rest">Strava</a>, <a href="https://github.com/yrom1/flask">this Flask website</a> and an <a href="https://github.com/yrom1/sqlite-etl">ETL repo</a> used when I switched from a flat-file database to a SQLite database.
         </p>
 
         <p>
