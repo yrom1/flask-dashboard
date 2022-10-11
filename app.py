@@ -27,9 +27,9 @@ RED = "#FF4136"
 
 def jira_color() -> str:
     ISSUES_DONE_TODAY = int(Cloud("kpiV1")["ISSUES_DONE_TODAY"])
-    if ISSUES_DONE_TODAY <= 2:
+    if ISSUES_DONE_TODAY <= 1:
         return RED
-    elif ISSUES_DONE_TODAY > 2 and ISSUES_DONE_TODAY <= 3:
+    elif ISSUES_DONE_TODAY > 1 and ISSUES_DONE_TODAY <= 3:
         return YELLOW
     else:
         return GREEN
