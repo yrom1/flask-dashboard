@@ -11,10 +11,9 @@ import requests
 import simplejson
 from bs4 import BeautifulSoup as bs
 from cloud_dictionary import Cloud
+from flask import Flask, render_template, send_from_directory, url_for
 from markdown_code_blocks import highlight
 from markupsafe import Markup, escape
-
-from flask import Flask, render_template, send_from_directory, url_for
 
 DYNAMODICT = Cloud("plotsV2")
 app = Flask(__name__)
@@ -23,17 +22,6 @@ app = Flask(__name__)
 GREEN = "#2ECC40"
 YELLOW = "#FFDC00"
 RED = "#FF4136"
-
-
-def jira_color() -> str:
-    ISSUES_DONE_TODAY = int(Cloud("kpiV1")["ISSUES_DONE_TODAY"])
-    if ISSUES_DONE_TODAY <= 1:
-        return RED
-    elif ISSUES_DONE_TODAY > 1 and ISSUES_DONE_TODAY <= 3:
-        return YELLOW
-    else:
-        return GREEN
-
 
 def leetcode_color() -> str:
     QUESTIONS_DONE_PAST_WEEK = int(Cloud("kpiV1")["QUESTIONS_DONE_PAST_WEEK"])
@@ -77,7 +65,6 @@ def render(content, *, title="Ryan Moore", head="", dashboard=False):
         content=Markup(content),
         title=Markup(title),
         head=Markup(head),
-        jira_json=clean_json(mp["jira"]),
         leetcode_json=clean_json(mp["leetcode"]),
         strava_json=clean_json(mp["strava"]),
         dashboard=dashboard,
@@ -165,15 +152,13 @@ def dashboard() -> str:
         <h1 id="Dashboard">Personal Dashboard</h1>
         <table style="width:100%">
             <tr>
-                <th style="text-align:left" colspan="3"><b><i>This Month —</i></b></th>
+                <th style="text-align:left" colspan="2"><b><i>This Month —</i></b></th>
             </tr>
             <tr class="metrics">
-                <td>Issues Completed</td>
                 <td>LeetCode Questions</td>
                 <td>Kilometers Ran</td>
             </tr>
             <tr class="numbers">
-                <td><strong>{ISSUES_DONE_THIS_MONTH()}</strong><span class="day">{space}({per_day(ISSUES_DONE_THIS_MONTH())}/day)</span></td>
                 <td><strong>{LEETCODE_QUESTIONS_THIS_MONTH()}</strong><span class="day">{space}({per_day(LEETCODE_QUESTIONS_THIS_MONTH())}/day)</span></td>
                 <td><strong>{KMS_RAN_THIS_MONTH()}</strong><span class="day">{space}({per_day(KMS_RAN_THIS_MONTH())}/day)</span></td>
             </tr>
@@ -182,10 +167,6 @@ def dashboard() -> str:
             <tr>
                 <th style="text-align:left"><i>Overview —</i></th>
                 <th width="10%">Status</th>
-            </tr>
-            <tr align="center">
-                <td><div id="jira"></div></td>
-                <td style="background-color:{jira_color()}"></td>
             </tr>
             <tr align="center">
                 <td><div id="leetcode"></div></td>
@@ -200,7 +181,6 @@ def dashboard() -> str:
         <h2>Dashboard Explanation</h2>
         <p>This dashboard tracks some useful KPIs about myself, specifically:</p>
         <ul>
-            <li>The first graph is about Jira, issue tracking software. I find it helpful to see how much effort I've been exerting recently, measured by the number of Jira issues completed, i.e. put in the 'Done' column of a Jira kanban board.</li>
             <li>The middle graph pertains to LeetCode, a programming practice problem site. Knowing how many questions I've done the past week is helpful to see if I'm hitting my desired pace. It helps me choose if I should practice Python or SQL on a given day. And seeing my progress over a long period of time is good motivation.</li>
             <li>The last graph pertains to Strava, a GPS run tracking app. I find this graph particularly useful to know how many days it's been since I ran last, which is an easy thing to forget. Also, it's helpful to see the distance I ran, to see if I'm making any progress.</li>
         </ul>
@@ -225,6 +205,9 @@ def dashboard() -> str:
         </p>
         <p>
         At this point, the website works as follows: GitHub Action tracker repositories generate -> Daily metrics data -> Stored in an Amazon RDS star schema -> Queried to create KPIs and JSON plot data -> Stored in DynamoDB tables -> Flask uses to fill in HTML templates -> Plots generated in the browser by Plotly.js!
+        </p>
+        <p>
+        <b>UPDATE</b> (6 Dec 2022): RIP Jira Tracker.
         </p>
         """
         ),

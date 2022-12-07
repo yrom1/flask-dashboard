@@ -32,10 +32,7 @@
 
     <script>
         var bodyStyles = document.body.style;
-        // so changes in .css file propogate
-        // let THEME_BUTTON = document.getElementById("theme-button");
-        // let LIGHT_COLOR = window.getComputedStyle(THEME_BUTTON)['color'];
-        // let DARK_COLOR = window.getComputedStyle(THEME_BUTTON)['background-color'];
+
         let _LIGHT_COLOR = "#fff";
         let _DARK_COLOR = "#111";
         let _LIGHT_LINK_COLOR = "#58a6ff";
@@ -71,10 +68,6 @@
         let HEIGHT = 300;
 
         var bodyStyles = document.body.style;
-        // so changes in .css file propogate
-        // let THEME_BUTTON = document.getElementById("theme-button");
-        // let LIGHT_COLOR = window.getComputedStyle(THEME_BUTTON)['color'];
-        // let DARK_COLOR = window.getComputedStyle(THEME_BUTTON)['background-color'];
         let LIGHT_COLOR = "#fff";
         let DARK_COLOR = "#111";
         let LIGHT_LINK_COLOR = "#58a6ff";
@@ -96,14 +89,6 @@
                     color: LINK,
                 }
             };
-
-            // const url = "https://raw.githubusercontent.com/yrom1/strava-rest/main/plot.json"
-            // const jira_r = fetch(url)
-            //     .then((response) => response.json())
-            //     .then((x) => {
-            //         return x;
-            //     });
-            // let jira_json = await jira_r;
             const strava_json = JSON.parse(JSON.parse({{ strava_json| tojson | safe }}));
         trace1.x = Object.values(strava_json.date);
         trace1.y = Object.values(strava_json.value);
@@ -145,13 +130,6 @@
                 // light theme
                 [BACKGROUND, TEXT, LINK] = [LIGHT_COLOR, DARK_COLOR, DARK_LINK_COLOR];
             }
-            // const url = "https://raw.githubusercontent.com/yrom1/yrom1/main/plot.json"
-            // const jira_r = fetch(url)
-            //     .then((response) => response.json())
-            //     .then((x) => {
-            //         return x;
-            //     });
-            // let jira_json = await jira_r;
             const leetcode_json = JSON.parse(JSON.parse({{ leetcode_json| tojson | safe }}));
 
         var trace1 = {
@@ -202,52 +180,6 @@
         var config = { responsive: true }
         var data = [trace1, trace2];
         Plotly.newPlot('leetcode', data, layout, config);
-        window.dispatchEvent(new Event('resize'));
-
-            }) ();
-
-        // jira plot
-        (async function () {
-            let [BACKGROUND, TEXT, LINK] = ["", "", ""];
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                // dark theme
-                [BACKGROUND, TEXT, LINK] = [DARK_COLOR, LIGHT_COLOR, LIGHT_LINK_COLOR];
-            } else {
-                // light theme
-                [BACKGROUND, TEXT, LINK] = [LIGHT_COLOR, DARK_COLOR, DARK_LINK_COLOR];
-            }
-            var trace1 = {
-                type: 'bar',
-                marker: {
-                    color: LINK,
-                }
-            };
-
-            // const url = "https://raw.githubusercontent.com/yrom1/jira-python/main/plot.json"
-            // const jira_r = fetch(url)
-            //     .then((response) => response.json())
-            //     .then((x) => {
-            //         return x;
-            //     });
-            // let jira_json = await jira_r;
-            const jira_json = JSON.parse(JSON.parse({{ jira_json| tojson | safe }}));
-
-        trace1.x = Object.values(jira_json.date);
-        trace1.y = Object.values(jira_json.value);
-
-        var layout = {
-            title: (trace1.y[trace1.y.length - 1]).toString() + " Jira Issues Completed Today",
-            font: { size: 14, color: TEXT },
-            height: HEIGHT,
-            yaxis: { title: { text: "# Completed Issues" }, gridcolor: "rgba(0,0,0,0)" },
-            xaxis: { gridcolor: "rgba(0,0,0,0)" },
-            paper_bgcolor: "rgba(0,0,0,0)",
-            plot_bgcolor: "rgba(0,0,0,0)",
-        };
-
-        var config = { responsive: true }
-        var data = [trace1];
-        Plotly.newPlot('jira', data, layout, config);
         window.dispatchEvent(new Event('resize'));
 
             }) ();
