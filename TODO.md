@@ -6,3 +6,4 @@
     - [x] this might mean having redo the schema to a star schema with foreign key for each metric... ya this is a good excuse to refactor the database into aws mysql perhaps
 - [ ] Number of LeetCode questions done is a bad metric I've come to realize. Activity would be better even if it's slightly more dubious in meaning. I'd rather redo questions more often than I currently am I can't memorize 600 solutison.
   - [ ] Can I group all SQL dialect activity into a single thing? That would be nice if I want to practice diffent dialects on offer on LC...
+- [ ] M O N O R E P O, consider Bazel, I heard something good about conda but couldn't find an example online
