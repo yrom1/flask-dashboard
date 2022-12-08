@@ -167,11 +167,11 @@
         let num_questions = (py_rank.slice(-1)[0] - py_start) + (sql_rank.slice(-1)[0] - sql_start)
 
         var layout = {
-            title: num_questions.toString() + " LeetCode Questions this Week",
+            title: num_questions.toString() + " New LC Questions Done this Week",
             font: { size: 14, color: TEXT },
             // xaxis: { title: { text: "Date" } },
             height: HEIGHT,
-            yaxis: { title: { text: "# Completed Questions" }, gridcolor: "rgba(0,0,0,0)" },
+            yaxis: { title: { text: "# New Questions" }, gridcolor: "rgba(0,0,0,0)" },
             xaxis: { gridcolor: "rgba(0,0,0,0)" },
             paper_bgcolor: "rgba(0,0,0,0)",
             plot_bgcolor: "rgba(0,0,0,0)",
@@ -221,7 +221,7 @@
         let submissions_this_week = submissions.y.slice(-7).reduce((a, b) => a + b, 0)
 
         var layout = {
-            title: submissions_this_week.toString() + " LeetCode Submissions this Week",
+            title: submissions_this_week.toString() + " LC Submissions this Week",
             font: { size: 14, color: TEXT },
             height: HEIGHT,
             yaxis: { title: { text: "# Submissions" }, gridcolor: "rgba(0,0,0,0)" },
