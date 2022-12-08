@@ -183,6 +183,59 @@
         window.dispatchEvent(new Event('resize'));
 
             }) ();
+
+
+        // leetcode2 submission plot
+        (async function () {
+            let [BACKGROUND, TEXT, LINK] = ["", "", ""];
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                // dark theme
+                [BACKGROUND, TEXT, LINK] = [DARK_COLOR, LIGHT_COLOR, LIGHT_LINK_COLOR];
+            } else {
+                // light theme
+                [BACKGROUND, TEXT, LINK] = [LIGHT_COLOR, DARK_COLOR, DARK_LINK_COLOR];
+            }
+            const leetcode2_json = JSON.parse(JSON.parse({{ leetcode2_json| tojson | safe }}));
+
+        var submissions = {
+            type: 'bar',
+            marker: {
+                color: LINK,
+            }
+        };
+        // var submissions = {
+        //     type: 'scatter',
+        //     name: 'Submissions',
+        //     marker: {
+        //         color: LINK,
+        //         line: {
+        //             width: 2.5
+        //         }
+        //     }
+        // };
+        submissions.x = Object.values(leetcode2_json.leet_submission_dates);
+        submissions.y = Object.values(leetcode2_json.leet_submission_counts);
+
+        // let submission_dates = submissions.y.slice();
+
+        let submissions_this_week = submissions.y.slice(-7).reduce((a, b) => a + b, 0)
+
+        var layout = {
+            title: submissions_this_week.toString() + " LeetCode Submissions this Week",
+            font: { size: 14, color: TEXT },
+            height: HEIGHT,
+            yaxis: { title: { text: "# Submissions" }, gridcolor: "rgba(0,0,0,0)" },
+            xaxis: { gridcolor: "rgba(0,0,0,0)" },
+            paper_bgcolor: "rgba(0,0,0,0)",
+            plot_bgcolor: "rgba(0,0,0,0)",
+        };
+
+        var config = { responsive: true }
+        var data = [submissions];
+        Plotly.newPlot('leetcode2', data, layout, config);
+        window.dispatchEvent(new Event('resize'));
+
+            }) ();
     </script>
     {% endif %}
 

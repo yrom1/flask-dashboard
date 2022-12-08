@@ -1,4 +1,5 @@
 # save this as app.py
+import json
 import subprocess
 import time
 from datetime import datetime
@@ -22,6 +23,13 @@ app = Flask(__name__)
 GREEN = "#2ECC40"
 YELLOW = "#FFDC00"
 RED = "#FF4136"
+PURPLE = "#B10DC9"
+TRANSPARENT = "#00FFFFFF"
+
+def leetcode2_color() -> str:
+    # TODO
+    return PURPLE
+
 
 def leetcode_color() -> str:
     QUESTIONS_DONE_PAST_WEEK = int(Cloud("kpiV1")["QUESTIONS_DONE_PAST_WEEK"])
@@ -66,6 +74,7 @@ def render(content, *, title="Ryan Moore", head="", dashboard=False):
         title=Markup(title),
         head=Markup(head),
         leetcode_json=clean_json(mp["leetcode"]),
+        leetcode2_json=clean_json(mp["leetcode2"]),
         strava_json=clean_json(mp["strava"]),
         dashboard=dashboard,
         UNIX_TIMESTAMP=int(time.time()),
@@ -90,6 +99,8 @@ def kpi(url: str) -> int:
 
 mp = Cloud("kpiV1")
 
+def LEETCODE_SUBMISSIONS_THIS_MONTH() -> int:
+    return sum(json.loads(Cloud("plotsV2")["leetcode2"])["leet_submission_counts"])
 
 def ISSUES_DONE_THIS_MONTH():
     return int(mp["ISSUES_DONE_THIS_MONTH"])
@@ -152,13 +163,15 @@ def dashboard() -> str:
         <h1 id="Dashboard">Personal Dashboard</h1>
         <table style="width:100%">
             <tr>
-                <th style="text-align:left" colspan="2"><b><i>This Month —</i></b></th>
+                <th style="text-align:left" colspan="3"><b><i>This Month —</i></b></th>
             </tr>
             <tr class="metrics">
-                <td>LeetCode Questions</td>
+                <td>LC Submissions</td>
+                <td>New LC Questions</td>
                 <td>Kilometers Ran</td>
             </tr>
             <tr class="numbers">
+                <td><strong>{LEETCODE_SUBMISSIONS_THIS_MONTH()}</strong><span class="day">{space}({per_day(LEETCODE_SUBMISSIONS_THIS_MONTH())}/day)</span></td>
                 <td><strong>{LEETCODE_QUESTIONS_THIS_MONTH()}</strong><span class="day">{space}({per_day(LEETCODE_QUESTIONS_THIS_MONTH())}/day)</span></td>
                 <td><strong>{KMS_RAN_THIS_MONTH()}</strong><span class="day">{space}({per_day(KMS_RAN_THIS_MONTH())}/day)</span></td>
             </tr>
@@ -167,6 +180,10 @@ def dashboard() -> str:
             <tr>
                 <th style="text-align:left"><i>Overview —</i></th>
                 <th width="10%">Status</th>
+            </tr>
+            <tr align="center">
+                <td><div id="leetcode2"></div></td>
+                <td style="background-color:{leetcode2_color()};"></td>
             </tr>
             <tr align="center">
                 <td><div id="leetcode"></div></td>
@@ -181,8 +198,8 @@ def dashboard() -> str:
         <h2>Dashboard Explanation</h2>
         <p>This dashboard tracks some useful KPIs about myself, specifically:</p>
         <ul>
-            <li>The middle graph pertains to LeetCode, a programming practice problem site. Knowing how many questions I've done the past week is helpful to see if I'm hitting my desired pace. It helps me choose if I should practice Python or SQL on a given day. And seeing my progress over a long period of time is good motivation.</li>
-            <li>The last graph pertains to Strava, a GPS run tracking app. I find this graph particularly useful to know how many days it's been since I ran last, which is an easy thing to forget. Also, it's helpful to see the distance I ran, to see if I'm making any progress.</li>
+            <li>The first two graphs pertains to LeetCode, a programming practice problem site. The number of submissions, which is a rough measure of my activity attempting questions, and number of new questions completed.</li>
+            <li>The last graph pertains to Strava, a GPS run tracking app. I find this graph particularly useful to know how many days it's been since I ran last, which is an easy thing to forget.</li>
         </ul>
         <p>The <a href="https://en.wikipedia.org/wiki/Andon_(manufacturing)">andon</a> colors let me know if my desired pace is being achieved (in the S.M.A.R.<strong>T.</strong> sense).
         <h2>Source code</h2>
@@ -208,6 +225,9 @@ def dashboard() -> str:
         </p>
         <p>
         <b>UPDATE</b> (6 Dec 2022): RIP Jira Tracker.
+        </p>
+        <p>
+        <b>UPDATE</b> (8 Dec 2022): Added a plot for LeetCode submissions, the color is purple because I don't know what to expect for it in terms of what is good or bad.
         </p>
         """
         ),
