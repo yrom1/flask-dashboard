@@ -32,10 +32,11 @@ def leetcode2_color() -> str:
 
 
 def leetcode_color() -> str:
+    # NOTE this is only questions that haven't been encountered before
     QUESTIONS_DONE_PAST_WEEK = int(Cloud("kpiV1")["QUESTIONS_DONE_PAST_WEEK"])
-    if QUESTIONS_DONE_PAST_WEEK >= 5:
+    if QUESTIONS_DONE_PAST_WEEK >= 2:
         return GREEN
-    elif QUESTIONS_DONE_PAST_WEEK >= 2 and QUESTIONS_DONE_PAST_WEEK <= 4:
+    elif QUESTIONS_DONE_PAST_WEEK == 1:
         return YELLOW
     else:
         return RED
