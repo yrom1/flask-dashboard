@@ -27,8 +27,13 @@ PURPLE = "#B10DC9"
 TRANSPARENT = "#00FFFFFF"
 
 def leetcode2_color() -> str:
-    # TODO
-    return PURPLE
+    SUBMISSIONS = int(Cloud("kpiV1")["LEETCODE_SUBMISSIONS_THIS_WEEK"])
+    if SUBMISSIONS >= 15:
+        return GREEN
+    elif SUBMISSIONS >= 5 and SUBMISSIONS < 15:
+        return YELLOW
+    else:
+        return RED
 
 
 def leetcode_color() -> str:
